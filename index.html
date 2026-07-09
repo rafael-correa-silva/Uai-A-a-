@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UAI AÇAÍ — O melhor sabor da Amazônia com o jeitinho mineiro | Guimarânia-MG</title>
+<meta name="description" content="Açaí artesanal em Guimarânia-MG. Copos, barcas especiais e milk-shakes com dezenas de adicionais. Peça pelo WhatsApp, presencial ou delivery.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="UAI AÇAÍ — O melhor sabor da Amazônia com o jeitinho mineiro">
+<meta property="og:description" content="Açaí artesanal em Guimarânia-MG. Copos, barcas especiais e milk-shakes com dezenas de adicionais. Peça pelo WhatsApp, presencial ou delivery.">
+<meta property="og:image" content="assets/img/hero-acai.jpg"> 
+<meta property="og:locale" content="pt_BR">
+
+<link rel="icon" href="assets/img/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FoodEstablishment",
+  "name": "UAI AÇAÍ",
+  "servesCuisine": "Açaí",
+  "image": "assets/img/hero-acai.jpg",
+  "telephone": "+5534998111439",
+  "email": "rafaelcorsil2006@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Rua Tamôios, 1171 - Centro",
+    "addressLocality": "Guimarânia",
+    "addressRegion": "MG",
+    "postalCode": "38730-000",
+    "addressCountry": "BR"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "13:00",
+      "closes": "22:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Saturday","Sunday"],
+      "opens": "12:00",
+      "closes": "23:00"
+    }
+  ],
+  "paymentAccepted": "Dinheiro, Pix, Cartão de débito, Cartão de crédito",
+  "sameAs": ["https://www.instagram.com/rafael_coorreea"]
+}
+</script>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header" id="topo">
+  <div class="header__inner container">
+    <a href="#topo" class="header__brand" aria-label="UAI AÇAÍ - início">
+      <img src="assets/img/logo.png" alt="Logo UAI AÇAÍ" class="header__logo" width="44" height="44">
+      <span class="header__name">UAI AÇAÍ</span>
+    </a>
+
+    <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="menuDrawer">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav-desktop" aria-label="Navegação principal">
+      <ul>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#cardapio">Cardápio</a></li>
+        <li><a href="#depoimentos">Depoimentos</a></li>
+        <li><a href="#faq">Dúvidas</a></li>
+        <li><a href="#rodape">Contato</a></li>
+      </ul>
+      <a href="https://wa.me/5534998111439" class="btn btn--whatsapp" target="_blank" rel="noopener">
+        <img src="assets/icons/whatsapp.svg" alt="" width="18" height="18">
+        Peça pelo WhatsApp
+      </a>
+    </nav>
+  </div>
+
+  <!-- Drawer / overlay mobile -->
+  <div class="menu-drawer" id="menuDrawer" aria-hidden="true">
+    <nav aria-label="Navegação mobile">
+      <ul>
+        <li><a href="#sobre" class="drawer-link">Sobre</a></li>
+        <li><a href="#cardapio" class="drawer-link">Cardápio</a></li>
+        <li><a href="#depoimentos" class="drawer-link">Depoimentos</a></li>
+        <li><a href="#faq" class="drawer-link">Dúvidas</a></li>
+        <li><a href="#rodape" class="drawer-link">Contato</a></li>
+      </ul>
+      <a href="https://wa.me/5534998111439" class="btn btn--whatsapp btn--block" target="_blank" rel="noopener">
+        <img src="assets/icons/whatsapp.svg" alt="" width="18" height="18">
+        Peça pelo WhatsApp
+      </a>
+    </nav>
+  </div>
+  <div class="menu-backdrop" id="menuBackdrop"></div>
+</header>
+
+<main>
+
+<!-- ===== 1. HERO ===== -->
+<section class="hero">
+  <div class="hero__media">
+    <img src="assets/img/hero-acai.jpg" alt="Copo de açaí montado com frutas frescas e coberturas da UAI AÇAÍ"
+         class="hero__img" width="1200" height="1200"
+         onerror="this.closest('.hero__media').classList.add('img-fallback'); this.alt='Foto do açaí UAI AÇAÍ (imagem indisponível)';">
+  </div>
+  <div class="hero__scrim"></div>
+
+  <div class="hero__content container">
+    <p class="eyebrow">Guimarânia · MG</p>
+    <h1 class="hero__title">UAI AÇAÍ</h1>
+    <p class="hero__slogan">O melhor sabor da Amazônia com o jeitinho Mineiro!</p>
+
+    <div class="hero__status" id="statusAbertura">
+      <span class="status-dot" id="statusDot"></span>
+      <span id="statusTexto">Consultando horário de funcionamento…</span>
+    </div>
+
+    <div class="hero__info">
+      <p><img src="assets/icons/pin-location.svg" alt="" width="16" height="16"> Rua Tamôios, 1171 - Centro, Guimarânia-MG</p>
+      <p>Seg–Sex: 13h às 22h · Sáb–Dom: 12h às 23h</p>
+    </div>
+
+    <a href="https://wa.me/5534998111439" class="btn btn--cta" target="_blank" rel="noopener">
+      <img src="assets/icons/whatsapp.svg" alt="" width="20" height="20">
+      Peça pelo WhatsApp
+    </a>
+  </div>
+</section>
+
+<div class="river-divider" aria-hidden="true">
+  <svg viewBox="0 0 1200 90" preserveAspectRatio="none">
+    <path class="river-divider__path" d="M0,45 C150,90 300,0 450,45 C600,90 750,0 900,45 C1050,90 1150,20 1200,45 L1200,90 L0,90 Z"/>
+  </svg>
+  <span class="gem gem--1"></span>
+  <span class="gem gem--2"></span>
+  <span class="gem gem--3"></span>
+</div>
+
+<!-- ===== 2. SOBRE O LOCAL ===== -->
+<section class="sobre" id="sobre">
+  <div class="container sobre__grid">
+    <div class="sobre__img-wrap reveal">
+      <img src="assets/img/local-loja.jpg" alt="Fachada e ambiente interno da loja UAI AÇAÍ em Guimarânia-MG"
+           class="sobre__img" loading="lazy" width="900" height="700"
+           onerror="this.parentElement.classList.add('img-fallback'); this.alt='Foto da loja UAI AÇAÍ (imagem indisponível)';">
+    </div>
+    <div class="sobre__text reveal">
+      <p class="eyebrow">Nosso ponto</p>
+      <h2>Açaí, barcas e combinações irresistíveis para qualquer momento.</h2>
+      <p>Na UAI AÇAÍ você encontra o açaí batido na hora, cremoso e generoso nos adicionais — do jeito que o mineiro gosta. Atendemos <strong>presencialmente</strong>, com um cantinho gostoso para você saborear no local, e também no <strong>delivery</strong>, levando aquele açaí bem geladinho até a sua casa.</p>
+      <p>Seja para matar a vontade rápida no caminho do trabalho ou para reunir a família numa barca especial, a gente prepara com carinho e capricho em cada camada.</p>
+    </div>
+  </div>
+</section>
+
+<div class="river-divider river-divider--flip" aria-hidden="true">
+  <svg viewBox="0 0 1200 90" preserveAspectRatio="none">
+    <path class="river-divider__path" d="M0,45 C150,90 300,0 450,45 C600,90 750,0 900,45 C1050,90 1150,20 1200,45 L1200,90 L0,90 Z"/>
+  </svg>
+  <span class="gem gem--1"></span>
+  <span class="gem gem--2"></span>
+</div>
+
+<!-- ===== 3. CARDÁPIO COMPLETO ===== -->
+<section class="cardapio" id="cardapio">
+  <div class="container">
+    <p class="eyebrow eyebrow--center">Cardápio</p>
+    <h2 class="section-title section-title--center">O que vai ser hoje?</h2>
+
+    <div class="tabs" role="tablist" aria-label="Categorias do cardápio">
+      <button class="tab-btn is-active" role="tab" aria-selected="true" aria-controls="tab-copos" id="tabbtn-copos" data-tab="copos">Copos</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-barcas" id="tabbtn-barcas" data-tab="barcas">Barcas Especiais</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-milkshakes" id="tabbtn-milkshakes" data-tab="milkshakes">Milk-Shakes</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-adicionais" id="tabbtn-adicionais" data-tab="adicionais">Adicionais</button>
+    </div>
+
+    <!-- COPOS -->
+    <div class="tab-panel is-active" id="tab-copos" role="tabpanel" aria-labelledby="tabbtn-copos">
+      <div class="card-grid">
+        <article class="card-produto reveal">
+          <img src="assets/img/copo-300ml-classico.jpg" alt="Copo de açaí 300ml clássico com frutas" loading="lazy" width="500" height="500" onerror="this.closest('.card-produto').classList.add('img-fallback'); this.alt='Copo 300ml (imagem indisponível)';">
+          <div class="card-produto__body">
+            <h3>Copo 300ml</h3>
+            <p class="card-produto__desc">Tamanho ideal para matar a vontade.</p>
+            <div class="card-produto__footer">
+              <span class="preco">R$ 12,00</span>
+              <button class="btn btn--sm btn--outline btn-pedir" data-produto="Copo 300ml">Fazer Pedido</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card-produto reveal">
+          <span class="badge-mais-vendido">Mais vendido</span>
+          <img src="assets/img/copo-500ml-nutella-morango.jpg" alt="Copo de açaí 500ml com Nutella e morango" loading="lazy" width="500" height="500" onerror="this.closest('.card-produto').classList.add('img-fallback'); this.alt='Copo 500ml (imagem indisponível)';">
+          <div class="card-produto__body">
+            <h3>Copo 500ml</h3>
+            <p class="card-produto__desc">O queridinho da galera, na medida certa.</p>
+            <div class="card-produto__footer">
+              <span class="preco">R$ 18,00</span>
+              <button class="btn btn--sm btn--outline btn-pedir" data-produto="Copo 500ml">Fazer Pedido</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card-produto reveal">
+          <img src="assets/img/copo-700ml-banana.jpg" alt="Copo de açaí 700ml com banana" loading="lazy" width="500" height="500" onerror="this.closest('.card-produto').classList.add('img-fallback'); this.alt='Copo 700ml (imagem indisponível)';">
+          <div class="card-produto__body">
+            <h3>Copo 700ml</h3>
+            <p class="card-produto__desc">Pra quem tá mesmo com fome de açaí.</p>
+            <div class="card-produto__footer">
+              <span class="preco">R$ 24,00</span>
+              <button class="btn btn--sm btn--outline btn-pedir" data-produto="Copo 700ml">Fazer Pedido</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card-produto reveal">
+          <img src="assets/img/copo-500ml-uva.jpg" alt="Copo de açaí 500ml com uva" loading="lazy" width="500" height="500" onerror="this.closest('.card-produto').classList.add('img-fallback'); this.alt='Copo com uva (imagem indisponível)';">
+          <div class="card-produto__body">
+            <h3>Copo 500ml Uva</h3>
+            <p class="card-produto__desc">Clássico com camadas de uva fresquinha.</p>
+            <div class="card-produto__footer">
+              <span class="preco">R$ 18,00</span>
+              <button class="btn btn--sm btn--outline btn-pedir" data-produto="Copo 500ml Uva">Fazer Pedido</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card-produto reveal">
+          <img src="assets/img/copo-500ml-pacoca.jpg" alt="Copo de açaí 500ml com paçoca" loading="lazy" width="500" height="500" onerror="this.closest('.card-produto').classList.add('img-fallback'); this.alt='Copo com paçoca (imagem indisponível)';">
+          <div class="card-produto__body">
+            <h3>Copo 500ml Paçoca</h3>
+            <p class="card-produto__desc">Aquele toque mineiro raiz.</p>
+            <div class="card-produto__footer">
+              <span class="preco">R$ 18,00</span>
+              <button class="btn btn--sm btn--outline btn-pedir" data-produto="Copo 500ml Paçoca">Fazer Pedido</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card-produto reveal">
+          <img src="assets/img/copo-500ml-kiwi-morango.jpg" alt="Copo de açaí 500ml com kiwi e morango" loading="lazy" width="500" height="500" onerror="this.closest('.card-produto').classList.add('img-fallback'); this.alt='Copo kiwi e morango (imagem indisponível)';">
+          <div class="card-produto__body">
+            <h3>Copo 500ml Kiwi & Morango</h3>
+            <p class="card-produto__desc">Fresquinho e colorido, direto pra sua mão.</p>
+            <div class="card-produto__footer">
+              <span class="preco">R$ 18,00</span>
+              <button class="btn btn--sm btn--outline btn-pedir" data-produto="Copo 500ml Kiwi e Morango">Fazer Pedido</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card-produto reveal">
+          <img src="assets/img/copo-700ml-mms-morango.jpg" alt="Copo de açaí 700ml com M&M's e morango" loading="lazy" width="500" height="500" onerror="this.closest('.card-produto').classList.add('img-fallback'); this.alt='Copo M&Ms e morango (imagem indisponível)';">
+          <div class="card-produto__body">
+            <h3>Copo 700ml M&amp;M's &amp; Morango</h3>
+            <p class="card-produto__desc">Crocante, colorido e cheio de sabor.</p>
+            <div class="card-produto__footer">
+              <span class="preco">R$ 24,00</span>
+              <button class="btn btn--sm btn--outline btn-pedir" data-produto="Copo 700ml M&Ms e Morango">Fazer Pedido</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card-produto reveal">
+          <img src="assets/img/copo-700ml-sonho-valsa.jpg" alt="Copo de açaí 700ml com Sonho de Valsa" loading="lazy" width="500" height="500" onerror="this.closest('.card-produto').classList.add('img-fallback'); this.alt='Copo Sonho de Valsa (imagem indisponível)';">
+          <div class="card-produto__body">
+            <h3>Copo 700ml Sonho de Valsa</h3>
+            <p class="card-produto__desc">Pra quem ama chocolate com amendoim.</p>
+            <div class="card-produto__footer">
+              <span class="preco">R$ 24,00</span>
+              <button class="btn btn--sm btn--outline btn-pedir" data-produto="Copo 700ml Sonho de Valsa">Fazer Pedido</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card-produto reveal">
+          <img src="assets/img/copo-morango-granola-amendoim.jpg" alt="Copo de açaí com morango, granola e amendoim" loading="lazy" width="500" height="500" onerror="this.closest('.card-produto').classList.add('img-fallback'); this.alt='Copo morango, granola e amendoim (imagem indisponível)';">
+          <div class="card-produto__body">
+            <h3>Copo Morango, Granola & Amendoim</h3>
+            <p class="card-produto__desc">Crocante e fresco em todas as camadas.</p>
+            <div class="card-produto__footer">
+              <span class="preco">R$ 18,00</span>
+              <button class="btn btn--sm btn--outline btn-pedir" data-produto="Copo Morango, Granola e Amendoim">Fazer Pedido</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card-produto reveal">
+          <img src="assets/img/copo-maracuja-castanha.jpg" alt="Copo de açaí com maracujá e castanha" loading="lazy" width="500" height="500" onerror="this.closest('.card-produto').classList.add('img-fallback'); this.alt='Copo maracujá e castanha (imagem indisponível)';">
+          <div class="card-produto__body">
+            <h3>Copo Maracujá & Castanha</h3>
+            <p class="card-produto__desc">Azedinho na medida com crocância no topo.</p>
+            <div class="card-produto__footer">
+              <span class="preco">R$ 18,00</span>
+              <button class="btn btn--sm btn--outline btn-pedir" data-produto="Copo Maracuja e Castanha">Fazer Pedido</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- BARCAS -->
+    <div class="tab-panel" id="tab-barcas" role="tabpanel" aria-labelledby="tabbtn-barcas" hidden>
+      <div class="card-grid card-grid--barcas">
+        <article class="card-produto reveal">
+          <img src="assets/img/barca-especial.jpg" alt="Barca especial de açaí Casal com diversos adicionais" loading="lazy" width="900" height="600" onerror="this.closest('.card-produto').classList.add('img-fallback'); this.alt='Barca Casal (imagem indisponível)';">
+          <div class="card-produto__body">
+            <h3>Barca Casal</h3>
+            <p class="card-produto__desc">700ml · 5 adicionais já inclusos no preço. Serve até 2 pessoas.</p>
+            <div class="card-produto__footer">
+              <span class="preco">R$ 35,00</span>
+              <button class="btn btn--sm btn--outline btn-pedir" data-produto="Barca Casal">Fazer Pedido</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card-produto reveal">
+          <img src="assets/img/barca-especial.jpg" alt="Barca especial de açaí Família com diversos adicionais" loading="lazy" width="900" height="600" onerror="this.closest('.card-produto').classList.add('img-fallback'); this.alt='Barca Família (imagem indisponível)';">
+          <div class="card-produto__body">
+            <h3>Barca Família</h3>
+            <p class="card-produto__desc">1 litro · 7 adicionais já inclusos no preço. Serve de 3 a 4 pessoas.</p>
+            <div class="card-produto__footer">
+              <span class="preco">R$ 48,00</span>
+              <button class="btn btn--sm btn--outline btn-pedir" data-produto="Barca Familia">Fazer Pedido</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card-produto reveal">
+          <img src="assets/img/barca-especial.jpg" alt="Barca especial de açaí Suprema com diversos adicionais" loading="lazy" width="900" height="600" onerror="this.closest('.card-produto').classList.add('img-fallback'); this.alt='Barca Suprema (imagem indisponível)';">
+          <div class="card-produto__body">
+            <h3>Barca Suprema</h3>
+            <p class="card-produto__desc">1,5 litro · 10 adicionais já inclusos no preço. Serve de 5 a 6 pessoas.</p>
+            <div class="card-produto__footer">
+              <span class="preco">R$ 65,00</span>
+              <button class="btn btn--sm btn--outline btn-pedir" data-produto="Barca Suprema">Fazer Pedido</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- MILK-SHAKES -->
+    <div class="tab-panel" id="tab-milkshakes" role="tabpanel" aria-labelledby="tabbtn-milkshakes" hidden>
+      <div class="card-grid">
+        <article class="card-produto reveal">
+          <img src="assets/img/milkshake-acai.jpg" alt="Milk-shake de açaí sabor tradicional" loading="lazy" width="500" height="500" onerror="this.closest('.card-produto').classList.add('img-fallback'); this.alt='Milk-shake tradicional (imagem indisponível)';">
+          <div class="card-produto__body">
+            <h3>Milk-Shake Tradicional</h3>
+            <div class="card-produto__footer">
+              <span class="preco">R$ 15,00</span>
+              <button class="btn btn--sm btn--outline btn-pedir" data-produto="Milk-Shake Tradicional">Fazer Pedido</button>
+            </div>
+          </div>
+        </article>
+        <article class="card-produto reveal">
+          <img src="assets/img/milkshake-acai.jpg" alt="Milk-shake de açaí sabor morango" loading="lazy" width="500" height="500" onerror="this.closest('.card-produto').classList.add('img-fallback'); this.alt='Milk-shake morango (imagem indisponível)';">
+          <div class="card-produto__body">
+            <h3>Milk-Shake Morango</h3>
+            <div class="card-produto__footer">
+              <span class="preco">R$ 15,00</span>
+              <button class="btn btn--sm btn--outline btn-pedir" data-produto="Milk-Shake Morango">Fazer Pedido</button>
+            </div>
+          </div>
+        </article>
+        <article class="card-produto reveal">
+          <img src="assets/img/milkshake-acai.jpg" alt="Milk-shake de açaí sabor chocolate" loading="lazy" width="500" height="500" onerror="this.closest('.card-produto').classList.add('img-fallback'); this.alt='Milk-shake chocolate (imagem indisponível)';">
+          <div class="card-produto__body">
+            <h3>Milk-Shake Chocolate</h3>
+            <div class="card-produto__footer">
+              <span class="preco">R$ 15,00</span>
+              <button class="btn btn--sm btn--outline btn-pedir" data-produto="Milk-Shake Chocolate">Fazer Pedido</button>
+            </div>
+          </div>
+        </article>
+        <article class="card-produto reveal">
+          <img src="assets/img/milkshake-acai.jpg" alt="Milk-shake de açaí sabor creme de avelã" loading="lazy" width="500" height="500" onerror="this.closest('.card-produto').classList.add('img-fallback'); this.alt='Milk-shake creme de avelã (imagem indisponível)';">
+          <div class="card-produto__body">
+            <h3>Milk-Shake Creme de Avelã</h3>
+            <div class="card-produto__footer">
+              <span class="preco">R$ 15,00</span>
+              <button class="btn btn--sm btn--outline btn-pedir" data-produto="Milk-Shake Creme de Avela">Fazer Pedido</button>
+            </div>
+          </div>
+        </article>
+        <article class="card-produto reveal">
+          <img src="assets/img/milkshake-acai.jpg" alt="Milk-shake de açaí sabor paçoca" loading="lazy" width="500" height="500" onerror="this.closest('.card-produto').classList.add('img-fallback'); this.alt='Milk-shake paçoca (imagem indisponível)';">
+          <div class="card-produto__body">
+            <h3>Milk-Shake Paçoca</h3>
+            <div class="card-produto__footer">
+              <span class="preco">R$ 15,00</span>
+              <button class="btn btn--sm btn--outline btn-pedir" data-produto="Milk-Shake Pacoca">Fazer Pedido</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- ADICIONAIS -->
+    <div class="tab-panel" id="tab-adicionais" role="tabpanel" aria-labelledby="tabbtn-adicionais" hidden>
+      <div class="adicionais-grid">
+        <div class="adicionais-cat reveal">
+          <h3>Frutas <span class="preco-tag">R$ 2,00</span></h3>
+          <p>Banana, morango, uva, kiwi, manga</p>
+        </div>
+        <div class="adicionais-cat reveal">
+          <h3>Pós &amp; Xaropes <span class="preco-tag">R$ 2,00</span></h3>
+          <p>Leite em pó, leite condensado, coco ralado</p>
+        </div>
+        <div class="adicionais-cat reveal">
+          <h3>Crocantes <span class="preco-tag">R$ 2,00</span></h3>
+          <p>Paçoca, granola, castanha triturada, amendoim, confetes, gotas de chocolate, M&amp;M's</p>
+        </div>
+        <div class="adicionais-cat reveal">
+          <h3>Caldas <span class="preco-tag">R$ 2,00</span></h3>
+          <p>Chocolate, morango, caramelo</p>
+        </div>
+        <div class="adicionais-cat reveal">
+          <h3>Cremes <span class="preco-tag">R$ 3,00</span></h3>
+          <p>Creme de avelã (Nutella), creme de ninho, creme de leite condensado (láctea), creme de morango, creme de maracujá</p>
+        </div>
+        <div class="adicionais-cat adicionais-cat--premium reveal">
+          <h3>Premium <span class="preco-tag">R$ 4,50</span></h3>
+          <p>Kinder Bueno, Ouro Branco, Sonho de Valsa, Chocito, Kit Kat, creme de Bis, creme de Pistache</p>
+        </div>
+      </div>
+      <p class="adicionais-nota">Todo adicional é cobrado à parte — os valores das barcas especiais já incluem a quantidade de adicionais indicada em cada uma.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4. GALERIA DE SABORES ===== -->
+<section class="galeria" id="galeria">
+  <div class="container">
+    <p class="eyebrow eyebrow--center">Galeria de sabores</p>
+    <h2 class="section-title section-title--center">Escolha com os olhos, peça com um toque</h2>
+    <p class="galeria__intro">Passe o mouse ou toque em um sabor para ver os adicionais, tamanhos e preço — e já mandar seu pedido pelo WhatsApp.</p>
+
+    <div class="galeria__grid">
+
+      <article class="galeria-card reveal" data-sabor="Açaí Clássico">
+        <img class="galeria-card__img" src="assets/img/copo-300ml-classico.jpg" alt="Copo de açaí sabor Clássico" loading="lazy" width="500" height="500"
+             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Açaí Clássico (imagem indisponível)';">
+        <span class="galeria-card__hint" aria-hidden="true">+</span>
+        <div class="galeria-card__overlay">
+          <div class="galeria-card__adicionais">
+            <span>Granola</span><span>Banana</span><span>Leite em pó</span>
+          </div>
+          <div class="galeria-card__footer">
+            <div class="galeria-card__tamanhos">
+              <span>300ml</span><span>500ml</span><span>700ml</span>
+            </div>
+            <div class="galeria-card__preco-wrap">
+              <span class="galeria-card__preco">R$ 18,00</span>
+              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Açaí Clássico">Pedir</button>
+            </div>
+          </div>
+        </div>
+        <h3 class="galeria-card__titulo">Açaí Clássico</h3>
+      </article>
+
+      <article class="galeria-card reveal" data-sabor="Nutella e Morango">
+        <img class="galeria-card__img" src="assets/img/copo-500ml-nutella-morango.jpg" alt="Copo de açaí sabor Nutella e Morango" loading="lazy" width="500" height="500"
+             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Nutella e Morango (imagem indisponível)';">
+        <span class="galeria-card__hint" aria-hidden="true">+</span>
+        <div class="galeria-card__overlay">
+          <div class="galeria-card__adicionais">
+            <span>Creme de avelã</span><span>Morango</span><span>Leite em pó</span>
+          </div>
+          <div class="galeria-card__footer">
+            <div class="galeria-card__tamanhos">
+              <span>300ml</span><span>500ml</span><span>700ml</span>
+            </div>
+            <div class="galeria-card__preco-wrap">
+              <span class="galeria-card__preco">R$ 18,00</span>
+              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Nutella e Morango">Pedir</button>
+            </div>
+          </div>
+        </div>
+        <h3 class="galeria-card__titulo">Nutella &amp; Morango</h3>
+      </article>
+
+      <article class="galeria-card reveal" data-sabor="Uva">
+        <img class="galeria-card__img" src="assets/img/copo-500ml-uva.jpg" alt="Copo de açaí sabor Uva" loading="lazy" width="500" height="500"
+             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Uva (imagem indisponível)';">
+        <span class="galeria-card__hint" aria-hidden="true">+</span>
+        <div class="galeria-card__overlay">
+          <div class="galeria-card__adicionais">
+            <span>Uva</span><span>Leite condensado</span><span>Leite em pó</span>
+          </div>
+          <div class="galeria-card__footer">
+            <div class="galeria-card__tamanhos">
+              <span>300ml</span><span>500ml</span><span>700ml</span>
+            </div>
+            <div class="galeria-card__preco-wrap">
+              <span class="galeria-card__preco">R$ 18,00</span>
+              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Uva">Pedir</button>
+            </div>
+          </div>
+        </div>
+        <h3 class="galeria-card__titulo">Uva</h3>
+      </article>
+
+      <article class="galeria-card reveal" data-sabor="Paçoca">
+        <img class="galeria-card__img" src="assets/img/copo-500ml-pacoca.jpg" alt="Copo de açaí sabor Paçoca" loading="lazy" width="500" height="500"
+             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Paçoca (imagem indisponível)';">
+        <span class="galeria-card__hint" aria-hidden="true">+</span>
+        <div class="galeria-card__overlay">
+          <div class="galeria-card__adicionais">
+            <span>Paçoca</span><span>Leite em pó</span><span>Leite condensado</span>
+          </div>
+          <div class="galeria-card__footer">
+            <div class="galeria-card__tamanhos">
+              <span>300ml</span><span>500ml</span><span>700ml</span>
+            </div>
+            <div class="galeria-card__preco-wrap">
+              <span class="galeria-card__preco">R$ 18,00</span>
+              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Pacoca">Pedir</button>
+            </div>
+          </div>
+        </div>
+        <h3 class="galeria-card__titulo">Paçoca</h3>
+      </article>
+
+      <article class="galeria-card reveal" data-sabor="Kiwi e Morango">
+        <img class="galeria-card__img" src="assets/img/copo-500ml-kiwi-morango.jpg" alt="Copo de açaí sabor Kiwi e Morango" loading="lazy" width="500" height="500"
+             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Kiwi e Morango (imagem indisponível)';">
+        <span class="galeria-card__hint" aria-hidden="true">+</span>
+        <div class="galeria-card__overlay">
+          <div class="galeria-card__adicionais">
+            <span>Kiwi</span><span>Morango</span><span>Leite em pó</span>
+          </div>
+          <div class="galeria-card__footer">
+            <div class="galeria-card__tamanhos">
+              <span>300ml</span><span>500ml</span><span>700ml</span>
+            </div>
+            <div class="galeria-card__preco-wrap">
+              <span class="galeria-card__preco">R$ 18,00</span>
+              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Kiwi e Morango">Pedir</button>
+            </div>
+          </div>
+        </div>
+        <h3 class="galeria-card__titulo">Kiwi &amp; Morango</h3>
+      </article>
+
+      <article class="galeria-card reveal" data-sabor="Banana">
+        <img class="galeria-card__img" src="assets/img/copo-700ml-banana.jpg" alt="Copo de açaí sabor Banana" loading="lazy" width="500" height="500"
+             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Banana (imagem indisponível)';">
+        <span class="galeria-card__hint" aria-hidden="true">+</span>
+        <div class="galeria-card__overlay">
+          <div class="galeria-card__adicionais">
+            <span>Banana</span><span>Leite condensado</span><span>Leite em pó</span>
+          </div>
+          <div class="galeria-card__footer">
+            <div class="galeria-card__tamanhos">
+              <span>300ml</span><span>500ml</span><span>700ml</span>
+            </div>
+            <div class="galeria-card__preco-wrap">
+              <span class="galeria-card__preco">R$ 18,00</span>
+              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Banana">Pedir</button>
+            </div>
+          </div>
+        </div>
+        <h3 class="galeria-card__titulo">Banana</h3>
+      </article>
+
+      <article class="galeria-card reveal" data-sabor="M&M's e Morango">
+        <img class="galeria-card__img" src="assets/img/copo-700ml-mms-morango.jpg" alt="Copo de açaí sabor M&amp;M's e Morango" loading="lazy" width="500" height="500"
+             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='M&amp;Ms e Morango (imagem indisponível)';">
+        <span class="galeria-card__hint" aria-hidden="true">+</span>
+        <div class="galeria-card__overlay">
+          <div class="galeria-card__adicionais">
+            <span>M&amp;M's</span><span>Morango</span><span>Calda de morango</span>
+          </div>
+          <div class="galeria-card__footer">
+            <div class="galeria-card__tamanhos">
+              <span>300ml</span><span>500ml</span><span>700ml</span>
+            </div>
+            <div class="galeria-card__preco-wrap">
+              <span class="galeria-card__preco">R$ 18,00</span>
+              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="M&Ms e Morango">Pedir</button>
+            </div>
+          </div>
+        </div>
+        <h3 class="galeria-card__titulo">M&amp;M's &amp; Morango</h3>
+      </article>
+
+      <article class="galeria-card reveal" data-sabor="Sonho de Valsa">
+        <img class="galeria-card__img" src="assets/img/copo-700ml-sonho-valsa.jpg" alt="Copo de açaí sabor Sonho de Valsa" loading="lazy" width="500" height="500"
+             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Sonho de Valsa (imagem indisponível)';">
+        <span class="galeria-card__hint" aria-hidden="true">+</span>
+        <div class="galeria-card__overlay">
+          <div class="galeria-card__adicionais">
+            <span>Sonho de Valsa</span><span>Leite em pó</span><span>Granola</span>
+          </div>
+          <div class="galeria-card__footer">
+            <div class="galeria-card__tamanhos">
+              <span>300ml</span><span>500ml</span><span>700ml</span>
+            </div>
+            <div class="galeria-card__preco-wrap">
+              <span class="galeria-card__preco">R$ 18,00</span>
+              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Sonho de Valsa">Pedir</button>
+            </div>
+          </div>
+        </div>
+        <h3 class="galeria-card__titulo">Sonho de Valsa</h3>
+      </article>
+
+      <article class="galeria-card reveal" data-sabor="Morango, Granola e Amendoim">
+        <img class="galeria-card__img" src="assets/img/copo-morango-granola-amendoim.jpg" alt="Copo de açaí sabor Morango, Granola e Amendoim" loading="lazy" width="500" height="500"
+             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Morango, Granola e Amendoim (imagem indisponível)';">
+        <span class="galeria-card__hint" aria-hidden="true">+</span>
+        <div class="galeria-card__overlay">
+          <div class="galeria-card__adicionais">
+            <span>Morango</span><span>Granola</span><span>Amendoim</span>
+          </div>
+          <div class="galeria-card__footer">
+            <div class="galeria-card__tamanhos">
+              <span>300ml</span><span>500ml</span><span>700ml</span>
+            </div>
+            <div class="galeria-card__preco-wrap">
+              <span class="galeria-card__preco">R$ 18,00</span>
+              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Morango, Granola e Amendoim">Pedir</button>
+            </div>
+          </div>
+        </div>
+        <h3 class="galeria-card__titulo">Morango, Granola &amp; Amendoim</h3>
+      </article>
+
+      <article class="galeria-card reveal" data-sabor="Maracujá e Castanha">
+        <img class="galeria-card__img" src="assets/img/copo-maracuja-castanha.jpg" alt="Copo de açaí sabor Maracujá e Castanha" loading="lazy" width="500" height="500"
+             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Maracujá e Castanha (imagem indisponível)';">
+        <span class="galeria-card__hint" aria-hidden="true">+</span>
+        <div class="galeria-card__overlay">
+          <div class="galeria-card__adicionais">
+            <span>Maracujá</span><span>Castanha</span><span>Granola</span>
+          </div>
+          <div class="galeria-card__footer">
+            <div class="galeria-card__tamanhos">
+              <span>300ml</span><span>500ml</span><span>700ml</span>
+            </div>
+            <div class="galeria-card__preco-wrap">
+              <span class="galeria-card__preco">R$ 18,00</span>
+              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Maracuja e Castanha">Pedir</button>
+            </div>
+          </div>
+        </div>
+        <h3 class="galeria-card__titulo">Maracujá &amp; Castanha</h3>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="pedido" id="pedido">
+  <div class="container container--narrow">
+    <p class="eyebrow eyebrow--center">Faça seu pedido</p>
+    <h2 class="section-title section-title--center">Monte seu açaí e envie pelo WhatsApp</h2>
+    <p class="pedido__intro">Escolha o tipo, o tamanho e os adicionais, adicione quantos itens quiser ao pedido e confirme quando estiver tudo certo.</p>
+
+    <form id="formPedido" class="pedido-form" novalidate>
+      <div class="pedido-form__grid">
+        <div class="campo">
+          <label for="campoTipo">Tipo de item</label>
+          <select id="campoTipo" name="tipo">
+            <option value="copo">Copo</option>
+            <option value="barca">Barca Especial</option>
+            <option value="milkshake">Milk-Shake</option>
+          </select>
+        </div>
+
+        <div class="campo" id="campoTamanhoWrap">
+          <label for="campoTamanho">Tamanho</label>
+          <select id="campoTamanho" name="tamanho"></select>
+        </div>
+
+        <div class="campo" id="campoSaborMilkshakeWrap" hidden>
+          <label for="campoSaborMilkshake">Sabor do Milk-Shake</label>
+          <select id="campoSaborMilkshake" name="saborMilkshake"></select>
+        </div>
+
+        <div class="campo campo--full">
+          <label for="campoSabor">Sabor / nome do item</label>
+          <input type="text" id="campoSabor" name="sabor" placeholder="Ex: Nutella com morango" autocomplete="off">
+        </div>
+      </div>
+
+      <fieldset class="campo campo--full campo-adicionais">
+        <legend>Adicionais <span class="campo-adicionais__info">(cada um pago à parte)</span></legend>
+        <div class="adicionais-form-grid" id="listaAdicionais"><!-- gerado via JS --></div>
+        <p class="aviso-adicionais" id="avisoAdicionais" role="status" aria-live="polite"></p>
+      </fieldset>
+
+      <div class="pedido-form__grid">
+        <div class="campo">
+          <label for="campoQuantidade">Quantidade</label>
+          <input type="number" id="campoQuantidade" name="quantidade" min="1" value="1" inputmode="numeric">
+        </div>
+
+        <div class="campo campo--checkbox">
+          <label>
+            <input type="checkbox" id="campoSeparado" name="separado">
+            Quero os adicionais separados do açaí
+          </label>
+        </div>
+      </div>
+
+      <div class="pedido-form__acoes">
+        <button type="submit" class="btn btn--cta" id="btnAdicionarItem">Adicionar ao Pedido</button>
+        <button type="button" class="btn btn--outline" id="btnCancelarEdicao" hidden>Cancelar edição</button>
+      </div>
+    </form>
+
+    <div class="carrinho" id="carrinho">
+      <h3 class="carrinho__titulo">Seu pedido</h3>
+      <p class="carrinho__vazio" id="carrinhoVazio">Seu carrinho está vazio por enquanto — monte seu primeiro item acima. 🍇</p>
+      <div class="carrinho__lista" id="carrinhoLista" aria-live="polite"></div>
+
+      <div class="campo campo--full">
+        <label for="campoObservacoes">Observações gerais do pedido (opcional)</label>
+        <textarea id="campoObservacoes" name="observacoes" rows="2" placeholder="Ex: sem açúcar, retirar no local..."></textarea>
+      </div>
+
+      <div class="carrinho__total">
+        <span>Total geral</span>
+        <strong id="carrinhoTotal">R$ 0,00</strong>
+      </div>
+
+      <button type="button" class="btn btn--cta btn--block" id="btnConfirmarPedido">
+        <img src="assets/icons/whatsapp.svg" alt="" width="18" height="18">
+        Confirmar Pedido pelo WhatsApp
+      </button>
+      <p class="carrinho__status" id="carrinhoStatus" role="status" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<div class="river-divider" aria-hidden="true">
+  <svg viewBox="0 0 1200 90" preserveAspectRatio="none">
+    <path class="river-divider__path" d="M0,45 C150,90 300,0 450,45 C600,90 750,0 900,45 C1050,90 1150,20 1200,45 L1200,90 L0,90 Z"/>
+  </svg>
+  <span class="gem gem--1"></span>
+  <span class="gem gem--2"></span>
+  <span class="gem gem--3"></span>
+</div>
+
+<!-- ===== 6. DEPOIMENTOS ===== -->
+<section class="depoimentos" id="depoimentos">
+  <div class="container">
+    <p class="eyebrow eyebrow--center">Quem prova, aprova</p>
+    <h2 class="section-title section-title--center">O que dizem sobre a gente</h2>
+
+    <div class="depoimentos__grid">
+      <blockquote class="depoimento reveal">
+        <p>“Melhor açaí da cidade, sempre muito bem servido e com ingredientes de qualidade.”</p>
+        <cite>Mariana S.</cite>
+      </blockquote>
+      <blockquote class="depoimento reveal">
+        <p>“Entrega rápida e a barca família vale muito a pena. Sempre peço nos finais de semana.”</p>
+        <cite>Lucas M.</cite>
+      </blockquote>
+      <blockquote class="depoimento reveal">
+        <p>“Gostei muito da variedade de adicionais e do atendimento. Recomendo.”</p>
+        <cite>Fernanda R.</cite>
+      </blockquote>
+      <blockquote class="depoimento reveal">
+        <p>“O açaí chegou bem gelado e com bastante complemento. Excelente experiência.”</p>
+        <cite>João P.</cite>
+      </blockquote>
+      <blockquote class="depoimento reveal">
+        <p>“Peço toda semana pelo WhatsApp, é super rápido e sempre chega geladinho.”</p>
+        <cite>Camila T.</cite>
+      </blockquote>
+      <blockquote class="depoimento reveal">
+        <p>“A barca suprema salvou meu aniversário, todo mundo amou!”</p>
+        <cite>Rodrigo A.</cite>
+      </blockquote>
+      <blockquote class="depoimento reveal">
+        <p>“Melhor custo-benefício da cidade, e os adicionais são generosos de verdade.”</p>
+        <cite>Beatriz L.</cite>
+      </blockquote>
+      <blockquote class="depoimento reveal">
+        <p>“Atendimento nota 10, super educados e o açaí é maravilhoso.”</p>
+        <cite>Diego S.</cite>
+      </blockquote>
+      <blockquote class="depoimento reveal">
+        <p>“Já testei quase todos os sabores, o de Nutella com morango é imbatível.”</p>
+        <cite>Larissa M.</cite>
+      </blockquote>
+      <blockquote class="depoimento reveal">
+        <p>“Uso pra retirar no local quando saio do trabalho, sempre pronto rapidinho.”</p>
+        <cite>Eduardo F.</cite>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 7. FAQ ===== -->
+<section class="faq" id="faq">
+  <div class="container container--narrow">
+    <p class="eyebrow eyebrow--center">Dúvidas</p>
+    <h2 class="section-title section-title--center">Perguntas frequentes</h2>
+
+    <div class="accordion">
+      <div class="accordion-item">
+        <h3>
+          <button class="accordion-trigger" aria-expanded="false">
+            Qual a taxa de entrega?
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="accordion-panel">
+          <p>A taxa de entrega varia de acordo com o bairro e a distância até o local da entrega. Consulte pelo WhatsApp.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h3>
+          <button class="accordion-trigger" aria-expanded="false">
+            Quais formas de pagamento vocês aceitam?
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="accordion-panel">
+          <p>Aceitamos Pix, dinheiro, cartão de débito e cartão de crédito.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h3>
+          <button class="accordion-trigger" aria-expanded="false">
+            Quais são os adicionais disponíveis?
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="accordion-panel">
+          <p>Trabalhamos com diversas opções de frutas, cremes, crocantes e caldas. Consulte nosso cardápio para ver todas as opções disponíveis.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h3>
+          <button class="accordion-trigger" aria-expanded="false">
+            Tem opção sem açúcar?
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="accordion-panel">
+          <p>Sim. Temos opção de açaí sem adição de açúcar. Consulte a disponibilidade no momento do pedido.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h3>
+          <button class="accordion-trigger" aria-expanded="false">
+            As barcas servem quantas pessoas?
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="accordion-panel">
+          <p>Barca Casal: até 2 pessoas. Barca Família: de 3 a 4 pessoas. Barca Suprema: de 5 a 6 pessoas.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h3>
+          <button class="accordion-trigger" aria-expanded="false">
+            Qual o horário de funcionamento?
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="accordion-panel">
+          <p>Segunda a sexta: 13h às 22h. Sábado e domingo: 12h às 23h.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h3>
+          <button class="accordion-trigger" aria-expanded="false">
+            Posso retirar no local?
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="accordion-panel">
+          <p>Sim. Você pode fazer seu pedido pelo WhatsApp e retirar diretamente na loja.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h3>
+          <button class="accordion-trigger" aria-expanded="false">
+            Vocês fazem entrega?
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="accordion-panel">
+          <p>Sim. Realizamos entregas em diversos bairros da cidade durante todo o horário de funcionamento.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h3>
+          <button class="accordion-trigger" aria-expanded="false">
+            Posso montar meu próprio açaí?
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="accordion-panel">
+          <p>Sim. Você pode escolher o tamanho e personalizar seu pedido com os adicionais disponíveis.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h3>
+          <button class="accordion-trigger" aria-expanded="false">
+            Como faço meu pedido?
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="accordion-panel">
+          <p>Basta usar a seção "Faça seu Pedido" do site: escolha um sabor da galeria ou monte o seu, confirme e envie direto pelo WhatsApp.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== 8. RODAPÉ ===== -->
+<footer class="footer" id="rodape">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <img src="assets/img/logo.png" alt="Logo UAI AÇAÍ" width="56" height="56">
+      <p class="footer__name">UAI AÇAÍ</p>
+      <p class="footer__slogan">O melhor sabor da Amazônia com o jeitinho Mineiro!</p>
+    </div>
+
+    <div class="footer__col">
+      <h3>Endereço</h3>
+      <p>Rua Tamôios, 1171 - Centro<br>Guimarânia-MG, CEP 38730-000</p>
+    </div>
+
+    <div class="footer__col">
+      <h3>Horário</h3>
+      <p>Segunda a sexta: 13h às 22h<br>Sábado e domingo: 12h às 23h</p>
+    </div>
+
+    <div class="footer__col">
+      <h3>Contato</h3>
+      <p><a href="mailto:rafaelcorsil2006@gmail.com">rafaelcorsil2006@gmail.com</a></p>
+      <div class="footer__socials">
+        <a href="https://wa.me/5534998111439" target="_blank" rel="noopener" aria-label="WhatsApp UAI AÇAÍ">
+          <img src="assets/icons/whatsapp.svg" alt="" width="22" height="22">
+        </a>
+        <a href="https://instagram.com/rafael_coorreea" target="_blank" rel="noopener" aria-label="Instagram UAI AÇAÍ">
+          <img src="assets/icons/instagram.svg" alt="" width="22" height="22">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <p>&copy; <span id="anoAtual">2026</span> UAI AÇAÍ. Projeto de portfólio — todos os dados são fictícios.</p>
+  </div>
+</footer>
+
+<!-- Botão flutuante WhatsApp -->
+<a href="https://wa.me/5534998111439" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <img src="assets/icons/whatsapp.svg" alt="" width="28" height="28">
+</a>
+
+<script src="js/script.js"></script>
+<script src="js/pedido.js"></script>
+</body>
+</html>
