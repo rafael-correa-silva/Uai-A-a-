@@ -1,17 +1,10 @@
-/* =========================================================
-   UAI AÇAÍ — pedido.js
-   Sistema de pedido/carrinho da Seção 5.
-   Implementa de verdade a função preencherPedido(sabor)
-   (stub criado no Prompt 2) e conecta os botões "Fazer
-   Pedido" do cardápio (Seção 3) e "Pedir" da galeria (Seção 4).
-   ========================================================= */
 
 (function () {
 
-  /* =========================================================
+  /*
      CATÁLOGO E PREÇOS (mesmos valores reais do cardápio)
-     ========================================================= */
-  const PRECOS_COPO = { '300ml': 12, '500ml': 18, '700ml': 24 };
+  */
+  const PRECOS_ACAI = { '300ml': 12, '500ml': 18, '700ml': 24 };
 
   const BARCAS = {
     'Casal':   { label: 'Barca Casal — 700ml (5 adicionais inclusos)',      preco: 35 },
@@ -35,15 +28,15 @@
   const CHAVE_LOCALSTORAGE = 'uaiacai_carrinho';
   const WHATSAPP_NUMERO = '5534998111439';
 
-  /* =========================================================
+  /*
      ESTADO
-     ========================================================= */
+  */
   let carrinho = [];
   let editandoId = null;
 
-  /* =========================================================
+  /*
      HELPERS
-     ========================================================= */
+  */
   function formatarPreco(valor) {
     return 'R$ ' + valor.toFixed(2).replace('.', ',');
   }
@@ -60,7 +53,7 @@
     return 'item-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
   }
 
-  /* ---------- localStorage (com try/catch para modo privado) ---------- */
+  /*localStorage (com try/catch para modo privado)*/
   function salvarCarrinho() {
     try {
       const observacoesEl = document.getElementById('campoObservacoes');
@@ -96,9 +89,9 @@
     }
   }
 
-  /* =========================================================
+  /*
      INTERPRETAÇÃO DE PRODUTOS VINDOS DO CARDÁPIO/GALERIA
-     ========================================================= */
+  */
   function interpretarProduto(nomeProduto) {
     const texto = (nomeProduto || '').trim();
     const minusculo = texto.toLowerCase();
@@ -114,11 +107,11 @@
       let sabor = texto.replace(/milk-?shake/i, '').trim();
       if (sabor.toLowerCase() === 'avela' || sabor.toLowerCase() === 'creme de avela') sabor = 'Creme de Avelã';
       if (sabor.toLowerCase() === 'pacoca') sabor = 'Paçoca';
-      if (!sabor) sabor = 'Tradicional';
+      if (!sabor || !SABORES_MILKSHAKE.includes(sabor)) sabor = 'Tradicional';
       return { tipo: 'milkshake', tamanho: '', sabor };
     }
 
-    // Copo — com ou sem o prefixo "Copo" (itens vindos da galeria não têm o prefixo)
+    // Açaí — com ou sem o prefixo "Copo" (itens vindos da galeria não têm o prefixo)
     let resto = texto.replace(/^copo\s*/i, '').trim();
     let tamanho = '500ml';
     const combinaTamanho = resto.match(/(300|500|700)\s*ml/i);
@@ -127,13 +120,13 @@
       resto = resto.replace(combinaTamanho[0], '').trim();
     }
     resto = resto.replace(/^,\s*|,\s*$/g, '').trim();
-    const sabor = resto || 'Clássico';
-    return { tipo: 'copo', tamanho, sabor };
+    const sabor = resto || '';
+    return { tipo: 'acai', tamanho, sabor };
   }
 
-  /* =========================================================
+  /*
      MONTAGEM DINÂMICA DO FORMULÁRIO
-     ========================================================= */
+  */
   function montarListaAdicionais() {
     const container = document.getElementById('listaAdicionais');
     if (!container) return;
@@ -168,7 +161,7 @@
       container.appendChild(grupoEl);
     });
 
-    // Aviso de "mais de 5 adicionais" — não bloqueante
+    // Aviso de "mais de 5 adicionais"
     container.addEventListener('change', atualizarAvisoAdicionais);
   }
 
@@ -185,59 +178,91 @@
     }
   }
 
-  function montarSaboresMilkshake() {
-    const select = document.getElementById('campoSaborMilkshake');
-    if (!select) return;
-    select.innerHTML = SABORES_MILKSHAKE
-      .map(sabor => `<option value="${sabor}">${sabor}</option>`)
-      .join('');
+  /*Caixas de seleção (tamanho / sabor do milk-shake)*/
+  function criarTileRadio(nomeGrupo, valor, rotulo, preco) {
+    const id = `${nomeGrupo}-${slugify(valor)}`;
+    const label = document.createElement('label');
+    label.className = 'opcao-tile';
+    label.setAttribute('for', id);
+    label.innerHTML = `
+      <input type="radio" id="${id}" name="${nomeGrupo}" value="${valor}">
+      <span class="opcao-tile__nome">${rotulo}</span>
+      <span class="opcao-tile__preco">${formatarPreco(preco)}</span>
+    `;
+    return label;
+  }
+
+  function montarOpcoesTamanho(tipo) {
+    const container = document.getElementById('listaTamanho');
+    if (!container) return;
+    container.innerHTML = '';
+
+    let opcoes = [];
+    if (tipo === 'acai') {
+      opcoes = Object.keys(PRECOS_ACAI).map(tam => ({ valor: tam, rotulo: tam, preco: PRECOS_ACAI[tam] }));
+    } else if (tipo === 'barca') {
+      opcoes = Object.keys(BARCAS).map(tam => ({ valor: tam, rotulo: `Barca ${tam}`, preco: BARCAS[tam].preco }));
+    }
+
+    opcoes.forEach((op, indice) => {
+      const tile = criarTileRadio('tamanho', op.valor, op.rotulo, op.preco);
+      if (indice === 0) tile.querySelector('input').checked = true;
+      container.appendChild(tile);
+    });
+  }
+
+  function montarOpcoesMilkshake() {
+    const container = document.getElementById('listaSaborMilkshake');
+    if (!container) return;
+    container.innerHTML = '';
+    SABORES_MILKSHAKE.forEach((sabor, indice) => {
+      const tile = criarTileRadio('saborMilkshake', sabor, sabor, PRECO_MILKSHAKE);
+      if (indice === 0) tile.querySelector('input').checked = true;
+      container.appendChild(tile);
+    });
   }
 
   function atualizarCamposPorTipo() {
     const tipo = document.getElementById('campoTipo').value;
     const tamanhoWrap = document.getElementById('campoTamanhoWrap');
-    const tamanhoSelect = document.getElementById('campoTamanho');
     const milkshakeWrap = document.getElementById('campoSaborMilkshakeWrap');
 
-    if (tipo === 'copo') {
-      tamanhoWrap.hidden = false;
-      milkshakeWrap.hidden = true;
-      tamanhoSelect.innerHTML = Object.keys(PRECOS_COPO)
-        .map(tam => `<option value="${tam}">${tam} — ${formatarPreco(PRECOS_COPO[tam])}</option>`)
-        .join('');
-    } else if (tipo === 'barca') {
-      tamanhoWrap.hidden = false;
-      milkshakeWrap.hidden = true;
-      tamanhoSelect.innerHTML = Object.keys(BARCAS)
-        .map(tam => `<option value="${tam}">${BARCAS[tam].label} — ${formatarPreco(BARCAS[tam].preco)}</option>`)
-        .join('');
-    } else {
-      // milkshake — tamanho único, sabor via select próprio
+    if (tipo === 'milkshake') {
+      // A caixa de sabor do milk-shake só existe/aparece quando este tipo é escolhido
       tamanhoWrap.hidden = true;
       milkshakeWrap.hidden = false;
+    } else {
+      tamanhoWrap.hidden = false;
+      milkshakeWrap.hidden = true;
+      montarOpcoesTamanho(tipo);
     }
   }
 
-  /* =========================================================
+  /*
      PREÇO BASE POR TIPO
-     ========================================================= */
+  */
   function precoBaseItem(tipo, tamanho) {
-    if (tipo === 'copo') return PRECOS_COPO[tamanho] || 0;
+    if (tipo === 'acai') return PRECOS_ACAI[tamanho] || 0;
     if (tipo === 'barca') return (BARCAS[tamanho] && BARCAS[tamanho].preco) || 0;
     if (tipo === 'milkshake') return PRECO_MILKSHAKE;
     return 0;
   }
 
   function labelTipoTamanho(item) {
-    if (item.tipo === 'copo') return `Copo ${item.tamanho}`;
+    if (item.tipo === 'acai') return `Açaí ${item.tamanho}`;
     if (item.tipo === 'barca') return BARCAS[item.tamanho] ? BARCAS[item.tamanho].label : `Barca ${item.tamanho}`;
-    if (item.tipo === 'milkshake') return 'Milk-Shake (tamanho único)';
+    if (item.tipo === 'milkshake') return 'Milk-Shake';
     return item.tipo;
   }
 
-  /* =========================================================
+  function tituloItem(item) {
+    const base = `${item.quantidade}x ${labelTipoTamanho(item)}`;
+    return item.sabor ? `${base} — ${item.sabor}` : base;
+  }
+
+  /*
      FORMULÁRIO → ITEM DO CARRINHO
-     ========================================================= */
+  */
   function lerAdicionaisSelecionados() {
     const marcados = document.querySelectorAll('#listaAdicionais input[type="checkbox"]:checked');
     return Array.from(marcados).map(chk => ({
@@ -254,14 +279,16 @@
 
   function lerFormulario() {
     const tipo = document.getElementById('campoTipo').value;
-    let tamanho = document.getElementById('campoTamanho').value;
-    let sabor = document.getElementById('campoSabor').value.trim();
+    let tamanho = '';
+    let sabor = document.getElementById('campoSaborOculto').value.trim();
 
     if (tipo === 'milkshake') {
-      sabor = document.getElementById('campoSaborMilkshake').value || 'Tradicional';
+      const radioMarcado = document.querySelector('#listaSaborMilkshake input:checked');
+      sabor = radioMarcado ? radioMarcado.value : SABORES_MILKSHAKE[0];
       tamanho = '';
-    } else if (!sabor) {
-      sabor = 'Tradicional';
+    } else {
+      const radioMarcado = document.querySelector('#listaTamanho input:checked');
+      tamanho = radioMarcado ? radioMarcado.value : '';
     }
 
     const quantidade = Math.max(1, parseInt(document.getElementById('campoQuantidade').value, 10) || 1);
@@ -286,10 +313,13 @@
     atualizarCamposPorTipo();
 
     if (item.tipo === 'milkshake') {
-      document.getElementById('campoSaborMilkshake').value = item.sabor;
+      const radio = document.querySelector(`#listaSaborMilkshake input[value="${CSS.escape(item.sabor)}"]`);
+      if (radio) radio.checked = true;
+      document.getElementById('campoSaborOculto').value = '';
     } else {
-      document.getElementById('campoTamanho').value = item.tamanho;
-      document.getElementById('campoSabor').value = item.sabor;
+      const radio = document.querySelector(`#listaTamanho input[value="${CSS.escape(item.tamanho)}"]`);
+      if (radio) radio.checked = true;
+      document.getElementById('campoSaborOculto').value = item.sabor || '';
     }
 
     document.getElementById('campoQuantidade').value = item.quantidade;
@@ -306,17 +336,17 @@
   function limparFormulario() {
     const form = document.getElementById('formPedido');
     if (!form) return;
-    document.getElementById('campoTipo').value = 'copo';
+    document.getElementById('campoTipo').value = 'acai';
     atualizarCamposPorTipo();
-    document.getElementById('campoSabor').value = '';
+    document.getElementById('campoSaborOculto').value = '';
     document.getElementById('campoQuantidade').value = 1;
     document.getElementById('campoSeparado').checked = false;
     limparAdicionaisSelecionados();
   }
 
-  /* =========================================================
+  /*
      RENDERIZAÇÃO DO CARRINHO
-     ========================================================= */
+  */
   function calcularTotalGeral() {
     return carrinho.reduce((soma, item) => soma + item.subtotal, 0);
   }
@@ -343,7 +373,7 @@
           : 'Sem adicionais';
 
         el.innerHTML = `
-          <div class="carrinho-item__titulo">${item.quantidade}x ${labelTipoTamanho(item)} — ${item.sabor}</div>
+          <div class="carrinho-item__titulo">${tituloItem(item)}</div>
           <div class="carrinho-item__adicionais">Adicionais: ${adicionaisTexto}</div>
           ${item.separado ? '<span class="carrinho-item__badge">Adicionais separados</span>' : ''}
           <div class="carrinho-item__footer">
@@ -368,9 +398,9 @@
     });
   }
 
-  /* =========================================================
+  /*
      AÇÕES DO CARRINHO
-     ========================================================= */
+  */
   function anunciarStatus(mensagem) {
     const statusEl = document.getElementById('carrinhoStatus');
     if (statusEl) statusEl.textContent = mensagem;
@@ -427,9 +457,9 @@
     anunciarStatus('Item removido do seu pedido.');
   }
 
-  /* =========================================================
+  /*
      MENSAGEM FINAL E ENVIO PARA O WHATSAPP
-     ========================================================= */
+  */
   function montarMensagemWhatsApp() {
     const observacoes = document.getElementById('campoObservacoes').value.trim();
     const linhas = [];
@@ -438,7 +468,7 @@
     linhas.push('');
 
     carrinho.forEach((item, indice) => {
-      linhas.push(`${indice + 1}) ${item.quantidade}x ${labelTipoTamanho(item)} — ${item.sabor}`);
+      linhas.push(`${indice + 1}) ${tituloItem(item)}`);
       if (item.adicionais.length) {
         const listaAdicionais = item.adicionais.map(a => `${a.nome} (${formatarPreco(a.preco)})`).join(', ');
         linhas.push(`   Adicionais: ${listaAdicionais}`);
@@ -455,8 +485,6 @@
 
     linhas.push(`TOTAL DO PEDIDO: ${formatarPreco(calcularTotalGeral())}`);
 
-    // encodeURIComponent já converte as quebras de linha ("\n") em %0A
-    // e escapa acentos/caracteres especiais, evitando quebrar a URL do WhatsApp.
     return linhas.join('\n');
   }
 
@@ -480,9 +508,9 @@
     anunciarStatus('Pedido enviado! Confira o WhatsApp para finalizar. 🍇');
   }
 
-  /* =========================================================
-     PRÉ-PREENCHIMENTO A PARTIR DO CARDÁPIO E DA GALERIA
-     ========================================================= */
+  /*
+     PRÉ-PREENCHIMENTO A PARTIR DO CARDÁPIO/GALERIA
+  */
   window.preencherFormularioPedido = function (nomeProduto) {
     const dados = interpretarProduto(nomeProduto);
 
@@ -490,20 +518,23 @@
     atualizarCamposPorTipo();
 
     if (dados.tipo === 'milkshake') {
-      document.getElementById('campoSaborMilkshake').value = dados.sabor;
+      const radio = document.querySelector(`#listaSaborMilkshake input[value="${CSS.escape(dados.sabor)}"]`);
+      if (radio) radio.checked = true;
+      document.getElementById('campoSaborOculto').value = '';
     } else {
-      document.getElementById('campoTamanho').value = dados.tamanho;
-      document.getElementById('campoSabor').value = dados.sabor;
+      const radio = document.querySelector(`#listaTamanho input[value="${CSS.escape(dados.tamanho)}"]`);
+      if (radio) radio.checked = true;
+      document.getElementById('campoSaborOculto').value = dados.sabor || '';
     }
   };
 
-  /* =========================================================
+  /*
      INICIALIZAÇÃO
-     ========================================================= */
+  */
   document.addEventListener('DOMContentLoaded', () => {
     if (!document.getElementById('formPedido')) return; // segurança, caso a seção não exista
 
-    montarSaboresMilkshake();
+    montarOpcoesMilkshake();
     montarListaAdicionais();
     atualizarCamposPorTipo();
     carregarCarrinho();

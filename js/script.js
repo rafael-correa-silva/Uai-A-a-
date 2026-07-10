@@ -1,16 +1,11 @@
-/* =========================================================
-   UAI AÇAÍ — script.js
-   Menu hambúrguer · Tabs cardápio · Accordion FAQ ·
-   Status aberto/fechado · Scroll reveal
-   ========================================================= */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ---------- Ano no rodapé ---------- */
+  /* Ano no rodapé */
   const anoEl = document.getElementById('anoAtual');
   if (anoEl) anoEl.textContent = new Date().getFullYear();
 
-  /* ---------- Menu hambúrguer (drawer mobile) ---------- */
+  /*Menu hambúrguer (drawer mobile)*/
   const hamburgerBtn = document.getElementById('hamburgerBtn');
   const menuDrawer = document.getElementById('menuDrawer');
   const menuBackdrop = document.getElementById('menuBackdrop');
@@ -42,43 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') closeMenu();
   });
 
-  /* ---------- Tabs do cardápio ---------- */
-  const tabButtons = document.querySelectorAll('.tab-btn');
-  const tabPanels = document.querySelectorAll('.tab-panel');
-
-  function activateTab(tabName) {
-    tabButtons.forEach(btn => {
-      const isActive = btn.dataset.tab === tabName;
-      btn.classList.toggle('is-active', isActive);
-      btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
-    });
-    tabPanels.forEach(panel => {
-      const isActive = panel.id === `tab-${tabName}`;
-      panel.classList.toggle('is-active', isActive);
-      panel.hidden = !isActive;
-    });
-  }
-
-  tabButtons.forEach(btn => {
-    btn.addEventListener('click', () => activateTab(btn.dataset.tab));
-  });
-
-  /* ---------- Botões "Fazer Pedido" (placeholder até o prompt 3) ---------- */
-  const botoesPedir = document.querySelectorAll('.btn-pedir');
-  const secaoPedido = document.getElementById('pedido');
-  botoesPedir.forEach(btn => {
-    btn.addEventListener('click', () => {
-      // Pré-preenchimento real implementado em js/pedido.js (Prompt 3)
-      if (typeof window.preencherFormularioPedido === 'function') {
-        window.preencherFormularioPedido(btn.dataset.produto);
-      }
-      if (secaoPedido) {
-        secaoPedido.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
-
-  /* ---------- Accordion FAQ (um item aberto por vez) ---------- */
+  /*Accordion FAQ (um item aberto por vez)*/
   const accordionTriggers = document.querySelectorAll('.accordion-trigger');
 
   accordionTriggers.forEach(trigger => {
@@ -98,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ---------- Status "Aberto agora" / "Fechado no momento" ---------- */
+  /*Status "Aberto agora" / "Fechado no momento"*/
   const statusTexto = document.getElementById('statusTexto');
   const statusDot = document.getElementById('statusDot');
 
@@ -126,11 +85,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   if (statusTexto && statusDot) calcularStatusLoja();
 
-  /* ---------- Galeria de sabores (Seção 4) ---------- */
+  /*Galeria de sabores (Seção 4)*/
   const galeriaCards = document.querySelectorAll('.galeria-card');
   const secaoPedidoGaleria = document.getElementById('pedido');
 
-  // Implementada de verdade em js/pedido.js (Prompt 3) via window.preencherFormularioPedido
+
   function preencherPedido(sabor) {
     if (typeof window.preencherFormularioPedido === 'function') {
       window.preencherFormularioPedido(sabor);
@@ -170,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ---------- Scroll reveal (IntersectionObserver) ---------- */
+  /*Scroll reveal (IntersectionObserver)*/
   const revealEls = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window && revealEls.length) {
     const observer = new IntersectionObserver((entries) => {
