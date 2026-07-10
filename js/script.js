@@ -90,9 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const secaoPedidoGaleria = document.getElementById('pedido');
 
 
-  function preencherPedido(sabor) {
+  function preencherPedido(sabor, adicionaisDoCard) {
     if (typeof window.preencherFormularioPedido === 'function') {
-      window.preencherFormularioPedido(sabor);
+      window.preencherFormularioPedido(sabor, adicionaisDoCard);
     }
   }
 
@@ -122,7 +122,15 @@ document.addEventListener('DOMContentLoaded', () => {
     botao.addEventListener('click', (e) => {
       e.stopPropagation(); // evita reabrir/fechar o overlay do próprio card
       const sabor = botao.dataset.produto;
-      preencherPedido(sabor);
+
+      // Lê os "adicionais típicos" mostrados no próprio card para marcar
+      // automaticamente as caixinhas correspondentes no formulário de pedido
+      const card = botao.closest('.galeria-card');
+      const adicionaisDoCard = card
+        ? Array.from(card.querySelectorAll('.galeria-card__adicionais span')).map(el => el.textContent.trim())
+        : [];
+
+      preencherPedido(sabor, adicionaisDoCard);
       if (secaoPedidoGaleria) {
         secaoPedidoGaleria.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }

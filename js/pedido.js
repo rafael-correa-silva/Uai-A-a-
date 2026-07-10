@@ -16,17 +16,64 @@
   const SABORES_MILKSHAKE = ['Tradicional', 'Morango', 'Chocolate', 'Creme de Avelã', 'Paçoca'];
 
   const ADICIONAIS_CATALOGO = [
-    { categoria: 'Frutas',        preco: 2,   itens: ['Banana', 'Morango', 'Uva', 'Kiwi', 'Manga'] },
+    { categoria: 'Frutas',        preco: 2,   itens: ['Banana', 'Morango', 'Uva', 'Kiwi', 'Manga', 'Maracujá'] },
     { categoria: 'Pós & Xaropes', preco: 2,   itens: ['Leite em pó', 'Leite condensado', 'Coco ralado'] },
-    { categoria: 'Crocantes',     preco: 2,   itens: ['Paçoca', 'Granola', 'Castanha triturada', 'Amendoim', 'Confetes', 'Gotas de chocolate', "M&M's"] },
+    { categoria: 'Crocantes',     preco: 2,   itens: ['Paçoca', 'Granola', 'Castanha triturada', 'Amendoim', 'Confetes', 'Gotas de chocolate', "M&M's", 'Ovo Maltine'] },
     { categoria: 'Caldas',        preco: 2,   itens: ['Calda de chocolate', 'Calda de morango', 'Calda de caramelo'] },
-    { categoria: 'Cremes',        preco: 3,   itens: ['Creme de avelã (Nutella)', 'Creme de ninho', 'Creme de leite condensado (Láctea)', 'Creme de morango', 'Creme de maracujá'] },
+    { categoria: 'Cremes',        preco: 3,   itens: ['Creme de avelã (Nutella)', 'Creme de ninho', 'Creme de leite condensado (Láctea)', 'Creme de morango', 'Creme de maracujá', 'Creme de Valsa'] },
     { categoria: 'Premium',       preco: 4.5, itens: ['Kinder Bueno', 'Ouro Branco', 'Sonho de Valsa', 'Chocito', 'Kit Kat', 'Creme de Bis', 'Creme de Pistache'] }
   ];
+
+  // Apelidos: como o adicional aparece no card da galeria → nome exato no catálogo acima.
+  // Permite marcar automaticamente as caixinhas certas mesmo quando o texto do
+  // card não é idêntico ao nome cadastrado (ex: "Nutella" → "Creme de avelã (Nutella)").
+  // Um item pode virar mais de um adicional real (ex: "Morango com Calda").
+  const ALIASES_ADICIONAIS = {
+    'nutella': ['Creme de avelã (Nutella)'],
+    'castanha': ['Castanha triturada'],
+    'morango com calda': ['Morango', 'Calda de morango'],
+  };
 
   const LIMITE_ADICIONAIS_AVISO = 5;
   const CHAVE_LOCALSTORAGE = 'uaiacai_carrinho';
   const WHATSAPP_NUMERO = '5534998111439';
+
+  function normalizarTexto(texto) {
+    return (texto || '')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .trim();
+  }
+
+  // Índice: nome normalizado -> nome exato do catálogo (montado uma única vez)
+  const MAPA_ADICIONAIS_POR_NOME = {};
+  ADICIONAIS_CATALOGO.forEach(grupo => {
+    grupo.itens.forEach(nome => {
+      MAPA_ADICIONAIS_POR_NOME[normalizarTexto(nome)] = nome;
+    });
+  });
+
+  // Converte os textos exibidos no card ("Nutella", "Castanha"...) nos nomes
+  // exatos usados nas caixinhas de adicionais do formulário. Textos que não
+  // correspondem a nenhum adicional real (ex: "5 adicionais inclusos",
+  // "Serve até 2 pessoas") são simplesmente ignorados.
+  function resolverAdicionaisDoCard(textos) {
+    const resultado = [];
+    (textos || []).forEach(textoBruto => {
+      const chave = normalizarTexto(textoBruto);
+      if (ALIASES_ADICIONAIS[chave]) {
+        ALIASES_ADICIONAIS[chave].forEach(nome => {
+          if (!resultado.includes(nome)) resultado.push(nome);
+        });
+        return;
+      }
+      const nomeCatalogo = MAPA_ADICIONAIS_POR_NOME[chave];
+      if (nomeCatalogo && !resultado.includes(nomeCatalogo)) {
+        resultado.push(nomeCatalogo);
+      }
+    });
+    return resultado;
+  }
 
   /*
      ESTADO
@@ -57,9 +104,13 @@
   function salvarCarrinho() {
     try {
       const observacoesEl = document.getElementById('campoObservacoes');
+      const enderecoEl = document.getElementById('campoEndereco');
+      const entregaMarcada = document.querySelector('input[name="tipoEntrega"]:checked');
       const dados = {
         itens: carrinho,
-        observacoes: observacoesEl ? observacoesEl.value : ''
+        observacoes: observacoesEl ? observacoesEl.value : '',
+        tipoEntrega: entregaMarcada ? entregaMarcada.value : 'retirada',
+        endereco: enderecoEl ? enderecoEl.value : ''
       };
       window.localStorage.setItem(CHAVE_LOCALSTORAGE, JSON.stringify(dados));
     } catch (erro) {
@@ -73,8 +124,17 @@
       if (!bruto) return;
       const dados = JSON.parse(bruto);
       carrinho = Array.isArray(dados.itens) ? dados.itens : [];
+
       const observacoesEl = document.getElementById('campoObservacoes');
       if (observacoesEl && dados.observacoes) observacoesEl.value = dados.observacoes;
+
+      if (dados.tipoEntrega === 'entrega') {
+        const radioEntrega = document.getElementById('entrega-delivery');
+        if (radioEntrega) radioEntrega.checked = true;
+      }
+      const enderecoEl = document.getElementById('campoEndereco');
+      if (enderecoEl && dados.endereco) enderecoEl.value = dados.endereco;
+      atualizarVisibilidadeEndereco();
     } catch (erro) {
       console.warn('Não foi possível carregar o carrinho salvo:', erro);
       carrinho = [];
@@ -89,12 +149,21 @@
     }
   }
 
+  /* ---------- Retirada no local / Entrega ---------- */
+  function atualizarVisibilidadeEndereco() {
+    const marcado = document.querySelector('input[name="tipoEntrega"]:checked');
+    const wrap = document.getElementById('campoEnderecoWrap');
+    if (!wrap) return;
+    wrap.hidden = !marcado || marcado.value !== 'entrega';
+  }
+
   /*
      INTERPRETAÇÃO DE PRODUTOS VINDOS DO CARDÁPIO/GALERIA
   */
   function interpretarProduto(nomeProduto) {
     const texto = (nomeProduto || '').trim();
     const minusculo = texto.toLowerCase();
+
 
     if (minusculo.startsWith('barca')) {
       let tamanho = 'Casal';
@@ -462,35 +531,65 @@
   */
   function montarMensagemWhatsApp() {
     const observacoes = document.getElementById('campoObservacoes').value.trim();
+    const tipoEntregaEl = document.querySelector('input[name="tipoEntrega"]:checked');
+    const tipoEntrega = tipoEntregaEl ? tipoEntregaEl.value : 'retirada';
+    const endereco = document.getElementById('campoEndereco').value.trim();
+
+    const SEPARADOR = '━━━━━━━━━━━━━━━';
     const linhas = [];
 
-    linhas.push('Olá! Gostaria de fazer o seguinte pedido na UAI AÇAÍ:');
+    linhas.push('Olá! 🍇 Gostaria de fazer o seguinte pedido na *UAI AÇAÍ*:');
     linhas.push('');
 
     carrinho.forEach((item, indice) => {
-      linhas.push(`${indice + 1}) ${tituloItem(item)}`);
+      linhas.push(SEPARADOR);
+      linhas.push(`*${indice + 1}) ${tituloItem(item)}*`);
       if (item.adicionais.length) {
-        const listaAdicionais = item.adicionais.map(a => `${a.nome} (${formatarPreco(a.preco)})`).join(', ');
-        linhas.push(`   Adicionais: ${listaAdicionais}`);
+        linhas.push('Adicionais:');
+        item.adicionais.forEach(a => {
+          linhas.push(`   • ${a.nome} — ${formatarPreco(a.preco)}`);
+        });
       }
-      if (item.separado) linhas.push('   OBS: adicionais separados');
-      linhas.push(`   Subtotal: ${formatarPreco(item.subtotal)}`);
-      linhas.push('');
+      if (item.separado) linhas.push('   Obs: adicionais separados');
+      linhas.push(`Subtotal: ${formatarPreco(item.subtotal)}`);
     });
 
+    linhas.push(SEPARADOR);
+    linhas.push('');
+
+    linhas.push(
+      tipoEntrega === 'entrega'
+        ? `📍 *Entrega* — ${endereco}`
+        : '📍 *Retirada no local*'
+    );
+    linhas.push('');
+
     if (observacoes) {
-      linhas.push(`Observações gerais: ${observacoes}`);
+      linhas.push(`📝 Observações: ${observacoes}`);
       linhas.push('');
     }
 
-    linhas.push(`TOTAL DO PEDIDO: ${formatarPreco(calcularTotalGeral())}`);
+    linhas.push(`💰 *TOTAL: ${formatarPreco(calcularTotalGeral())}*`);
 
+    // encodeURIComponent já converte as quebras de linha ("\n") em %0A
+    // e escapa acentos/caracteres especiais, evitando quebrar a URL do WhatsApp.
     return linhas.join('\n');
   }
 
   function confirmarPedido() {
     if (carrinho.length === 0) {
       anunciarStatus('Seu carrinho está vazio — adicione pelo menos um item antes de confirmar. 🙂');
+      return;
+    }
+
+    const tipoEntregaEl = document.querySelector('input[name="tipoEntrega"]:checked');
+    const tipoEntrega = tipoEntregaEl ? tipoEntregaEl.value : 'retirada';
+    const enderecoEl = document.getElementById('campoEndereco');
+
+    if (tipoEntrega === 'entrega' && !enderecoEl.value.trim()) {
+      anunciarStatus('Informe o endereço de entrega antes de confirmar. 📍');
+      enderecoEl.focus();
+      enderecoEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
 
@@ -504,6 +603,9 @@
     renderizarCarrinho();
     limparFormulario();
     document.getElementById('campoObservacoes').value = '';
+    enderecoEl.value = '';
+    document.getElementById('entrega-retirada').checked = true;
+    atualizarVisibilidadeEndereco();
     sairModoEdicao();
     anunciarStatus('Pedido enviado! Confira o WhatsApp para finalizar. 🍇');
   }
@@ -511,7 +613,7 @@
   /*
      PRÉ-PREENCHIMENTO A PARTIR DO CARDÁPIO/GALERIA
   */
-  window.preencherFormularioPedido = function (nomeProduto) {
+  window.preencherFormularioPedido = function (nomeProduto, adicionaisDoCard) {
     const dados = interpretarProduto(nomeProduto);
 
     document.getElementById('campoTipo').value = dados.tipo;
@@ -525,6 +627,20 @@
       const radio = document.querySelector(`#listaTamanho input[value="${CSS.escape(dados.tamanho)}"]`);
       if (radio) radio.checked = true;
       document.getElementById('campoSaborOculto').value = dados.sabor || '';
+    }
+
+    // Marca automaticamente as caixinhas dos adicionais típicos daquele
+    // sabor (mostrados no próprio card). Só faz sentido para açaí: nas
+    // barcas os adicionais já vêm inclusos no preço, e no milk-shake não há
+    // adicionais típicos — então não mexemos nas caixinhas nesses casos.
+    limparAdicionaisSelecionados();
+    if (dados.tipo === 'acai' && adicionaisDoCard && adicionaisDoCard.length) {
+      const nomesParaMarcar = resolverAdicionaisDoCard(adicionaisDoCard);
+      nomesParaMarcar.forEach(nome => {
+        const chk = document.querySelector(`#listaAdicionais input[data-nome="${CSS.escape(nome)}"]`);
+        if (chk) chk.checked = true;
+      });
+      atualizarAvisoAdicionais();
     }
   };
 
@@ -549,6 +665,14 @@
     });
     document.getElementById('btnConfirmarPedido').addEventListener('click', confirmarPedido);
     document.getElementById('campoObservacoes').addEventListener('input', salvarCarrinho);
+
+    document.querySelectorAll('input[name="tipoEntrega"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        atualizarVisibilidadeEndereco();
+        salvarCarrinho();
+      });
+    });
+    document.getElementById('campoEndereco').addEventListener('input', salvarCarrinho);
   });
 
 })();

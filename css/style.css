@@ -29,6 +29,11 @@
 *, *::before, *::after { box-sizing: border-box; }
 html, body { overflow-x: hidden; max-width: 100%; }
 html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+
+/* Garante que [hidden] realmente esconda o elemento, mesmo quando outra
+   regra de mesma especificidade (ex: .campo{display:flex}) tentaria
+   sobrepor o padrão do navegador. */
+[hidden] { display: none !important; }
 body {
   margin: 0;
   font-family: var(--font-body);
@@ -488,6 +493,7 @@ p { margin: 0 0 1em; }
 
 /*Caixas de seleção (tamanho / sabor do milk-shake)*/
 .opcoes-tile { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.opcoes-tile.opcoes-tile--entrega { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .opcao-tile {
   display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0;
   background: var(--off-white); border: 2px solid #E4DAEE; border-radius: var(--radius-sm);
@@ -497,6 +503,7 @@ p { margin: 0 0 1em; }
 .opcao-tile input[type="radio"] { accent-color: var(--roxo-claro); width: 17px; height: 17px; flex-shrink: 0; }
 .opcao-tile__nome { flex: 1; min-width: 0; font-weight: 600; color: var(--texto); }
 .opcao-tile__preco { color: var(--verde); font-weight: 700; white-space: nowrap; font-size: .78rem; }
+.campo-ajuda { margin: 6px 0 0; font-size: .78rem; color: #857e8c; }
 
 .aviso-adicionais {
   margin: 12px 0 0; padding: 10px 14px; border-radius: var(--radius-sm);
