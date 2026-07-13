@@ -1,12 +1,7 @@
 
 (function () {
 
-  /*
-     CATÁLOGO E PREÇOS (mesmos valores reais do cardápio)
-     Única fonte de verdade: os cards da Seção "Cardápio" (mais abaixo,
-     CARDAPIO + gerarCardsCardapio) são montados a partir destes preços,
-     em vez de ter os valores repetidos também no HTML.
-  */
+  
   const PRECOS_ACAI = { '300ml': 12, '500ml': 18, '700ml': 24 };
 
   // adicionaisInclusos = quantos adicionais (os mais caros escolhidos) saem
@@ -214,7 +209,7 @@
     const picture = document.createElement('picture');
     const source = document.createElement('source');
     source.type = 'image/webp';
-    source.srcset = `assets/img/${dados.imagemBase}.webp`;
+    source.srcset = `assets/img/${dados.imagemBase}.jpg`;
 
     const img = document.createElement('img');
     img.className = 'galeria-card__img';
@@ -490,7 +485,7 @@
     if (!aviso) return;
     const marcados = document.querySelectorAll('#listaAdicionais input[type="checkbox"]:checked');
     if (marcados.length > LIMITE_ADICIONAIS_AVISO) {
-      aviso.textContent = 'Uou, bastante recheio! Confere se cabe tudo no copo antes de confirmar 😄';
+      aviso.textContent = 'Uou, bastante recheio! Confere se cabe tudo no copo antes de confirmar';
       aviso.classList.add('is-visivel');
     } else {
       aviso.textContent = '';
@@ -856,7 +851,7 @@
     const SEPARADOR = '━━━━━━━━━━━━━━━';
     const linhas = [];
 
-    linhas.push('Olá! 🍇 Gostaria de fazer o seguinte pedido na *UAI AÇAÍ*:');
+    linhas.push('Olá!  Gostaria de fazer o seguinte pedido na *UAI AÇAÍ*:');
     linhas.push('');
 
     carrinho.forEach((item, indice) => {
@@ -896,7 +891,7 @@
 
   function confirmarPedido() {
     if (carrinho.length === 0) {
-      anunciarStatus('Seu carrinho está vazio — adicione pelo menos um item antes de confirmar. 🙂');
+      anunciarStatus('Seu carrinho está vazio — adicione pelo menos um item antes de confirmar. ');
       return;
     }
 
@@ -927,7 +922,7 @@
     sincronizarSelecionado(radioRetirada);
     atualizarVisibilidadeEndereco();
     sairModoEdicao();
-    anunciarStatus('Pedido enviado! Confira o WhatsApp para finalizar. 🍇');
+    anunciarStatus('Pedido enviado! Confira o WhatsApp para finalizar. ');
   }
 
   /*

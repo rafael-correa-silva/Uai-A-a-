@@ -303,6 +303,11 @@ p { margin: 0 0 1em; }
   padding: 18px 0; font-size: .78rem; opacity: .75;
 }
 
+.footer__bottom a:hover {
+  color: var(--gema-clara);
+  transition: 80ms;
+}
+
 @media (min-width: 768px) {
   .footer__grid { grid-template-columns: 1.4fr 1fr 1fr 1fr; }
 }
@@ -361,7 +366,7 @@ p { margin: 0 0 1em; }
   transform-origin: center;
 }
 
-/* Título visível sempre, sobreposto na base da foto (fora do overlay interativo) */
+
 .galeria-card__titulo {
   position: absolute; left: 0; right: 0; bottom: 0;
   margin: 0; padding: 10px 12px 9px;
@@ -371,7 +376,6 @@ p { margin: 0 0 1em; }
   transition: opacity .25s ease;
 }
 
-/* Dica de toque (some em dispositivos com hover de mouse) */
 .galeria-card__hint {
   position: absolute; top: 10px; right: 10px; z-index: 2;
   width: 26px; height: 26px; border-radius: 50%;
@@ -422,7 +426,7 @@ p { margin: 0 0 1em; }
 .galeria-card.is-ativo .galeria-card__titulo { opacity: 0; }
 .galeria-card.is-ativo .galeria-card__hint { opacity: 0; transform: scale(.5); }
 
-/* Hover só em dispositivos com mouse real, pra não "grudar" em telas de toque */
+/* Hover só em dispositivos com mouse real */
 @media (hover: hover) and (pointer: fine) {
   .galeria-card__hint { display: none; }
   .galeria-card:hover .galeria-card__img { transform: scale(1.06); }
