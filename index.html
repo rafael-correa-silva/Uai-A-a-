@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
 <title>UAI AÇAÍ — O melhor sabor da Amazônia com o jeitinho mineiro | Guimarânia-MG</title>
 <meta name="description" content="Açaí artesanal em Guimarânia-MG. Copos, barcas especiais e milk-shakes com dezenas de adicionais. Peça pelo WhatsApp, presencial ou delivery.">
 
@@ -105,9 +106,11 @@
 <!-- ===== 1. HERO ===== -->
 <section class="hero">
   <div class="hero__media">
-    <img src="assets/img/hero-acai.jpg" alt="Copo de açaí montado com frutas frescas e coberturas da UAI AÇAÍ"
-         class="hero__img" width="1200" height="1200"
-         onerror="this.closest('.hero__media').classList.add('img-fallback'); this.alt='Foto do açaí UAI AÇAÍ (imagem indisponível)';">
+    <picture>
+      <source type="image/webp" srcset="assets/img/hero-acai.webp">
+      <img src="assets/img/hero-acai.jpg" alt="Copo de açaí montado com frutas frescas e coberturas da UAI AÇAÍ"
+           class="hero__img" width="1200" height="1200" fetchpriority="high" id="imgHero">
+    </picture>
   </div>
   <div class="hero__scrim"></div>
 
@@ -147,8 +150,7 @@
   <div class="container sobre__grid">
     <div class="sobre__img-wrap reveal">
       <img src="assets/img/local-loja.jpg" alt="Fachada e ambiente interno da loja UAI AÇAÍ em Guimarânia-MG"
-           class="sobre__img" loading="lazy" width="900" height="700"
-           onerror="this.parentElement.classList.add('img-fallback'); this.alt='Foto da loja UAI AÇAÍ (imagem indisponível)';">
+           class="sobre__img" loading="lazy" width="900" height="700" id="imgSobre">
     </div>
     <div class="sobre__text reveal">
       <p class="eyebrow">Nosso ponto</p>
@@ -174,389 +176,7 @@
     <h2 class="section-title section-title--center">Escolha com os olhos, peça com um toque</h2>
     <p class="galeria__intro">Passe o mouse ou toque em um item para ver os adicionais, tamanhos e preço e já mandar seu pedido pelo WhatsApp.</p>
 
-    <div class="galeria__grid">
-
-      <article class="galeria-card reveal" data-sabor="M&M's e Calda de Morango">
-        <img class="galeria-card__img" src="assets/img/copo-300ml-classico.jpg" alt="Copo de açaí sabor Clássico" loading="lazy" width="500" height="500"
-             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Açaí Clássico (imagem indisponível)';">
-        <span class="galeria-card__hint" aria-hidden="true">+</span>
-        <div class="galeria-card__overlay">
-          <div class="galeria-card__adicionais">
-            <span>Calda de Morango</span><span>M&Ms</span>
-          </div>
-          <div class="galeria-card__footer">
-            <div class="galeria-card__tamanhos">
-              <span>300ml</span><span>500ml</span><span>700ml</span>
-            </div>
-            <div class="galeria-card__preco-wrap">
-              <span class="galeria-card__preco">R$ 18,00</span>
-              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="M&M's e Calda de Morango">Pedir</button>
-            </div>
-          </div>
-        </div>
-        <h3 class="galeria-card__titulo">M&ms &amp; Calda de Morango</h3>
-      </article>
-
-      <article class="galeria-card reveal" data-sabor="Nutella, Morango e Leite em pó">
-        <img class="galeria-card__img" src="assets/img/copo-500ml-nutella-morango.jpg" alt="Copo de açaí sabor Nutella e Morango" loading="lazy" width="500" height="500"
-             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Nutella e Morango (imagem indisponível)';">
-        <span class="galeria-card__hint" aria-hidden="true">+</span>
-        <div class="galeria-card__overlay">
-          <div class="galeria-card__adicionais">
-            <span>Nutella</span><span>Morango</span><span>Leite em pó</span>
-          </div>
-          <div class="galeria-card__footer">
-            <div class="galeria-card__tamanhos">
-              <span>300ml</span><span>500ml</span><span>700ml</span>
-            </div>
-            <div class="galeria-card__preco-wrap">
-              <span class="galeria-card__preco">R$ 18,00</span>
-              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Nutella, Morango e Leite em pó">Pedir</button>
-            </div>
-          </div>
-        </div>
-        <h3 class="galeria-card__titulo">Nutella &amp; Morango &amp; Leite em pó</h3>
-      </article>
-
-      <article class="galeria-card reveal" data-sabor="Uva, Nutella e Leite em pó">
-        <img class="galeria-card__img" src="assets/img/copo-500ml-uva.jpg" alt="Copo de açaí sabor Uva" loading="lazy" width="500" height="500"
-             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Uva (imagem indisponível)';">
-        <span class="galeria-card__hint" aria-hidden="true">+</span>
-        <div class="galeria-card__overlay">
-          <div class="galeria-card__adicionais">
-            <span>Uva</span><span>Nutella</span><span>Leite em pó</span>
-          </div>
-          <div class="galeria-card__footer">
-            <div class="galeria-card__tamanhos">
-              <span>300ml</span><span>500ml</span><span>700ml</span>
-            </div>
-            <div class="galeria-card__preco-wrap">
-              <span class="galeria-card__preco">R$ 18,00</span>
-              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Uva, Nutella e Leite em pó">Pedir</button>
-            </div>
-          </div>
-        </div>
-        <h3 class="galeria-card__titulo">Uva &amp; Nutella &amp; Leite em pó</h3>
-      </article>
-
-      <article class="galeria-card reveal" data-sabor="Paçoca e Leite em pó">
-        <img class="galeria-card__img" src="assets/img/copo-500ml-pacoca.jpg" alt="Copo de açaí sabor Paçoca" loading="lazy" width="500" height="500"
-             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Paçoca (imagem indisponível)';">
-        <span class="galeria-card__hint" aria-hidden="true">+</span>
-        <div class="galeria-card__overlay">
-          <div class="galeria-card__adicionais">
-            <span>Paçoca</span><span>Leite em pó</span>
-          </div>
-          <div class="galeria-card__footer">
-            <div class="galeria-card__tamanhos">
-              <span>300ml</span><span>500ml</span><span>700ml</span>
-            </div>
-            <div class="galeria-card__preco-wrap">
-              <span class="galeria-card__preco">R$ 18,00</span>
-              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Paçoca e Leite em pó">Pedir</button>
-            </div>
-          </div>
-        </div>
-        <h3 class="galeria-card__titulo">Paçoca &amp; Leite em pó</h3>
-      </article>
-
-      <article class="galeria-card reveal" data-sabor="Ovo Maltine e Nutella">
-        <img class="galeria-card__img" src="assets/img/copo-500ml-kiwi-morango.jpg" alt="Copo de açaí sabor Kiwi e Morango" loading="lazy" width="500" height="500"
-             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Kiwi e Morango (imagem indisponível)';">
-        <span class="galeria-card__hint" aria-hidden="true">+</span>
-        <div class="galeria-card__overlay">
-          <div class="galeria-card__adicionais">
-            <span>Nutella</span><span>Ovo Maltine</span>
-          </div>
-          <div class="galeria-card__footer">
-            <div class="galeria-card__tamanhos">
-              <span>300ml</span><span>500ml</span><span>700ml</span>
-            </div>
-            <div class="galeria-card__preco-wrap">
-              <span class="galeria-card__preco">R$ 18,00</span>
-              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Ovo Maltine e Nutella">Pedir</button>
-            </div>
-          </div>
-        </div>
-        <h3 class="galeria-card__titulo">Ovo Maltine &amp; Nutella</h3>
-      </article>
-
-      <article class="galeria-card reveal" data-sabor="Banana, Leite em pó e Leite condensado">
-        <img class="galeria-card__img" src="assets/img/copo-700ml-banana.jpg" alt="Copo de açaí sabor Banana" loading="lazy" width="500" height="500"
-             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Banana (imagem indisponível)';">
-        <span class="galeria-card__hint" aria-hidden="true">+</span>
-        <div class="galeria-card__overlay">
-          <div class="galeria-card__adicionais">
-            <span>Banana</span><span>Leite condensado</span><span>Leite em pó</span>
-          </div>
-          <div class="galeria-card__footer">
-            <div class="galeria-card__tamanhos">
-              <span>300ml</span><span>500ml</span><span>700ml</span>
-            </div>
-            <div class="galeria-card__preco-wrap">
-              <span class="galeria-card__preco">R$ 18,00</span>
-              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Banana, Leite em pó e Leite condensado">Pedir</button>
-            </div>
-          </div>
-        </div>
-        <h3 class="galeria-card__titulo">Banana &amp; Leite em pó &amp; Leite condensado</h3>
-      </article>
-
-      <article class="galeria-card reveal" data-sabor="M&M's e Creme de Valsa">
-        <img class="galeria-card__img" src="assets/img/copo-700ml-mms-morango.jpg" alt="Copo de açaí sabor M&amp;M's e Morango" loading="lazy" width="500" height="500"
-             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='M&amp;Ms e Morango (imagem indisponível)';">
-        <span class="galeria-card__hint" aria-hidden="true">+</span>
-        <div class="galeria-card__overlay">
-          <div class="galeria-card__adicionais">
-            <span>M&amp;M's</span><span>Creme de Valsa</span>
-          </div>
-          <div class="galeria-card__footer">
-            <div class="galeria-card__tamanhos">
-              <span>300ml</span><span>500ml</span><span>700ml</span>
-            </div>
-            <div class="galeria-card__preco-wrap">
-              <span class="galeria-card__preco">R$ 18,00</span>
-              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="M&amp;M's e Creme de Valsa">Pedir</button>
-            </div>
-          </div>
-        </div>
-        <h3 class="galeria-card__titulo">M&amp;M's &amp; Creme de Valsa</h3>
-      </article>
-
-      <article class="galeria-card reveal" data-sabor="Kiwi, Morango e Leite Condensado">
-        <img class="galeria-card__img" src="assets/img/copo-700ml-sonho-valsa.jpg" alt="Copo de açaí sabor Sonho de Valsa" loading="lazy" width="500" height="500"
-             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Sonho de Valsa (imagem indisponível)';">
-        <span class="galeria-card__hint" aria-hidden="true">+</span>
-        <div class="galeria-card__overlay">
-          <div class="galeria-card__adicionais">
-            <span>Kiwi</span><span>Morango</span><span>Leite Condensado</span>
-          </div>
-          <div class="galeria-card__footer">
-            <div class="galeria-card__tamanhos">
-              <span>300ml</span><span>500ml</span><span>700ml</span>
-            </div>
-            <div class="galeria-card__preco-wrap">
-              <span class="galeria-card__preco">R$ 18,00</span>
-              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Kiwi, Morango e Leite Condensado">Pedir</button>
-            </div>
-          </div>
-        </div>
-        <h3 class="galeria-card__titulo">kiwi &amp; Morango &amp; Leite Condensado</h3>
-      </article>
-
-      <article class="galeria-card reveal" data-sabor="Maracujá, Granola e Amendoim">
-        <img class="galeria-card__img" src="assets/img/copo-morango-granola-amendoim.jpg" alt="Copo de açaí sabor Morango, Granola e Amendoim" loading="lazy" width="500" height="500"
-             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Morango, Granola e Amendoim (imagem indisponível)';">
-        <span class="galeria-card__hint" aria-hidden="true">+</span>
-        <div class="galeria-card__overlay">
-          <div class="galeria-card__adicionais">
-            <span>Maracujá</span><span>Granola</span><span>Amendoim</span>
-          </div>
-          <div class="galeria-card__footer">
-            <div class="galeria-card__tamanhos">
-              <span>300ml</span><span>500ml</span><span>700ml</span>
-            </div>
-            <div class="galeria-card__preco-wrap">
-              <span class="galeria-card__preco">R$ 18,00</span>
-              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Maracujá, Granola e Amendoim">Pedir</button>
-            </div>
-          </div>
-        </div>
-        <h3 class="galeria-card__titulo">Maracujá &amp; Granola &amp; Amendoim</h3>
-      </article>
-
-      <article class="galeria-card reveal" data-sabor="Morango com Calda, Castanha e Granola">
-        <img class="galeria-card__img" src="assets/img/copo-maracuja-castanha.jpg" alt="Copo de açaí sabor Maracujá e Castanha" loading="lazy" width="500" height="500"
-             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Maracujá e Castanha (imagem indisponível)';">
-        <span class="galeria-card__hint" aria-hidden="true">+</span>
-        <div class="galeria-card__overlay">
-          <div class="galeria-card__adicionais">
-            <span>Morango com calda</span><span>Castanha</span><span>Granola</span>
-          </div>
-          <div class="galeria-card__footer">
-            <div class="galeria-card__tamanhos">
-              <span>300ml</span><span>500ml</span><span>700ml</span>
-            </div>
-            <div class="galeria-card__preco-wrap">
-              <span class="galeria-card__preco">R$ 18,00</span>
-              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Morango com Calda, Castanha e Granola">Pedir</button>
-            </div>
-          </div> 
-        </div>
-        <h3 class="galeria-card__titulo">Morango &amp; Castanha &amp; Granola</h3>
-      </article>
-
-      <!-- Barcas Especiais -->
-      <article class="galeria-card reveal" data-sabor="Barca Casal">
-        <img class="galeria-card__img" src="assets/img/barca-especial.jpg" alt="Barca especial de açaí Casal com diversos adicionais" loading="lazy" width="900" height="600"
-             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Barca Casal (imagem indisponível)';">
-        <span class="galeria-card__hint" aria-hidden="true">+</span>
-        <div class="galeria-card__overlay">
-          <div class="galeria-card__adicionais">
-            <span>5 adicionais inclusos</span><span>Serve até 2 pessoas</span>
-          </div>
-          <div class="galeria-card__footer">
-            <div class="galeria-card__tamanhos">
-              <span>700ml</span>
-            </div>
-            <div class="galeria-card__preco-wrap">
-              <span class="galeria-card__preco">R$ 35,00</span>
-              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Barca Casal">Pedir</button>
-            </div>
-          </div>
-        </div>
-        <h3 class="galeria-card__titulo">Barca Casal</h3>
-      </article>
-
-      <article class="galeria-card reveal" data-sabor="Barca Família">
-        <img class="galeria-card__img" src="assets/img/barca-especial.jpg" alt="Barca especial de açaí Família com diversos adicionais" loading="lazy" width="900" height="600"
-             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Barca Família (imagem indisponível)';">
-        <span class="galeria-card__hint" aria-hidden="true">+</span>
-        <div class="galeria-card__overlay">
-          <div class="galeria-card__adicionais">
-            <span>7 adicionais inclusos</span><span>Serve 3 a 4 pessoas</span>
-          </div>
-          <div class="galeria-card__footer">
-            <div class="galeria-card__tamanhos">
-              <span>1 litro</span>
-            </div>
-            <div class="galeria-card__preco-wrap">
-              <span class="galeria-card__preco">R$ 48,00</span>
-              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Barca Familia">Pedir</button>
-            </div>
-          </div>
-        </div>
-        <h3 class="galeria-card__titulo">Barca Família</h3>
-      </article>
-
-      <article class="galeria-card reveal" data-sabor="Barca Suprema">
-        <img class="galeria-card__img" src="assets/img/barca-especial.jpg" alt="Barca especial de açaí Suprema com diversos adicionais" loading="lazy" width="900" height="600"
-             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Barca Suprema (imagem indisponível)';">
-        <span class="galeria-card__hint" aria-hidden="true">+</span>
-        <div class="galeria-card__overlay">
-          <div class="galeria-card__adicionais">
-            <span>10 adicionais inclusos</span><span>Serve 5 a 6 pessoas</span>
-          </div>
-          <div class="galeria-card__footer">
-            <div class="galeria-card__tamanhos">
-              <span>1,5 litro</span>
-            </div>
-            <div class="galeria-card__preco-wrap">
-              <span class="galeria-card__preco">R$ 65,00</span>
-              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Barca Suprema">Pedir</button>
-            </div>
-          </div>
-        </div>
-        <h3 class="galeria-card__titulo">Barca Suprema</h3>
-      </article>
-
-      <!-- Milk-Shakes -->
-      <article class="galeria-card reveal" data-sabor="Milk-Shake Tradicional">
-        <img class="galeria-card__img" src="assets/img/milkshake-acai.jpg" alt="Milk-shake de açaí sabor Tradicional" loading="lazy" width="500" height="500"
-             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Milk-Shake Tradicional (imagem indisponível)';">
-        <span class="galeria-card__hint" aria-hidden="true">+</span>
-        <div class="galeria-card__overlay">
-          <div class="galeria-card__adicionais">
-            <span>Batido na hora</span>
-          </div>
-          <div class="galeria-card__footer">
-            <div class="galeria-card__tamanhos">
-              <span>Tamanho único</span>
-            </div>
-            <div class="galeria-card__preco-wrap">
-              <span class="galeria-card__preco">R$ 15,00</span>
-              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Milk-Shake Tradicional">Pedir</button>
-            </div>
-          </div>
-        </div>
-        <h3 class="galeria-card__titulo">Milk-Shake Tradicional</h3>
-      </article>
-
-      <article class="galeria-card reveal" data-sabor="Milk-Shake Morango">
-        <img class="galeria-card__img" src="assets/img/milkshake-acai.jpg" alt="Milk-shake de açaí sabor Morango" loading="lazy" width="500" height="500"
-             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Milk-Shake Morango (imagem indisponível)';">
-        <span class="galeria-card__hint" aria-hidden="true">+</span>
-        <div class="galeria-card__overlay">
-          <div class="galeria-card__adicionais">
-            <span>Batido na hora</span>
-          </div>
-          <div class="galeria-card__footer">
-            <div class="galeria-card__tamanhos">
-              <span>Tamanho único</span>
-            </div>
-            <div class="galeria-card__preco-wrap">
-              <span class="galeria-card__preco">R$ 15,00</span>
-              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Milk-Shake Morango">Pedir</button>
-            </div>
-          </div>
-        </div>
-        <h3 class="galeria-card__titulo">Milk-Shake Morango</h3>
-      </article>
-
-      <article class="galeria-card reveal" data-sabor="Milk-Shake Chocolate">
-        <img class="galeria-card__img" src="assets/img/milkshake-acai.jpg" alt="Milk-shake de açaí sabor Chocolate" loading="lazy" width="500" height="500"
-             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Milk-Shake Chocolate (imagem indisponível)';">
-        <span class="galeria-card__hint" aria-hidden="true">+</span>
-        <div class="galeria-card__overlay">
-          <div class="galeria-card__adicionais">
-            <span>Batido na hora</span>
-          </div>
-          <div class="galeria-card__footer">
-            <div class="galeria-card__tamanhos">
-              <span>Tamanho único</span>
-            </div>
-            <div class="galeria-card__preco-wrap">
-              <span class="galeria-card__preco">R$ 15,00</span>
-              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Milk-Shake Chocolate">Pedir</button>
-            </div>
-          </div>
-        </div>
-        <h3 class="galeria-card__titulo">Milk-Shake Chocolate</h3>
-      </article>
-
-      <article class="galeria-card reveal" data-sabor="Milk-Shake Creme de Avelã">
-        <img class="galeria-card__img" src="assets/img/milkshake-acai.jpg" alt="Milk-shake de açaí sabor Creme de Avelã" loading="lazy" width="500" height="500"
-             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Milk-Shake Creme de Avelã (imagem indisponível)';">
-        <span class="galeria-card__hint" aria-hidden="true">+</span>
-        <div class="galeria-card__overlay">
-          <div class="galeria-card__adicionais">
-            <span>Batido na hora</span>
-          </div>
-          <div class="galeria-card__footer">
-            <div class="galeria-card__tamanhos">
-              <span>Tamanho único</span>
-            </div>
-            <div class="galeria-card__preco-wrap">
-              <span class="galeria-card__preco">R$ 15,00</span>
-              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Milk-Shake Creme de Avela">Pedir</button>
-            </div>
-          </div>
-        </div>
-        <h3 class="galeria-card__titulo">Milk-Shake Creme de Avelã</h3>
-      </article>
-
-      <article class="galeria-card reveal" data-sabor="Milk-Shake Paçoca">
-        <img class="galeria-card__img" src="assets/img/milkshake-acai.jpg" alt="Milk-shake de açaí sabor Paçoca" loading="lazy" width="500" height="500"
-             onerror="this.closest('.galeria-card').classList.add('img-fallback'); this.alt='Milk-Shake Paçoca (imagem indisponível)';">
-        <span class="galeria-card__hint" aria-hidden="true">+</span>
-        <div class="galeria-card__overlay">
-          <div class="galeria-card__adicionais">
-            <span>Batido na hora</span>
-          </div>
-          <div class="galeria-card__footer">
-            <div class="galeria-card__tamanhos">
-              <span>Tamanho único</span>
-            </div>
-            <div class="galeria-card__preco-wrap">
-              <span class="galeria-card__preco">R$ 15,00</span>
-              <button type="button" class="btn btn--sm btn--cta galeria-card__btn-pedir" data-produto="Milk-Shake Pacoca">Pedir</button>
-            </div>
-          </div>
-        </div>
-        <h3 class="galeria-card__titulo">Milk-Shake Paçoca</h3>
-      </article>
-
-    </div>
+    <div class="galeria__grid" id="listaGaleria"><!-- gerado via JS (pedido.js -> CARDAPIO) --></div>
   </div>
 </section>
 
@@ -581,6 +201,7 @@
         <div class="campo campo--full" id="campoTamanhoWrap">
           <label id="labelTamanho">Tamanho</label>
           <div class="opcoes-tile" id="listaTamanho" role="radiogroup" aria-labelledby="labelTamanho"><!-- gerado via JS --></div>
+          <p class="aviso-barca-inclusos" id="avisoBarcaInclusos" role="status" aria-live="polite"></p>
         </div>
 
         <div class="campo campo--full" id="campoSaborMilkshakeWrap" hidden>
@@ -845,7 +466,7 @@
   <img src="assets/icons/whatsapp.svg" alt="" width="28" height="28">
 </a>
 
-<script src="js/script.js"></script>
-<script src="js/pedido.js"></script>
+<script src="js/script.js" defer></script>
+<script src="js/pedido.js" defer></script>
 </body>
 </html>

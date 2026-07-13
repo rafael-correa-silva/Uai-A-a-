@@ -1,6 +1,24 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  /* Fallback de imagem (hero e "sobre") via JS — antes era onerror inline no
+     HTML, mas isso exigiria "unsafe-inline" no script-src da CSP. Fazendo
+     assim, a política de segurança pode ficar restrita a 'self'. */
+  const imgHero = document.getElementById('imgHero');
+  if (imgHero) {
+    imgHero.addEventListener('error', () => {
+      imgHero.closest('.hero__media').classList.add('img-fallback');
+      imgHero.alt = 'Foto do açaí UAI AÇAÍ (imagem indisponível)';
+    });
+  }
+  const imgSobre = document.getElementById('imgSobre');
+  if (imgSobre) {
+    imgSobre.addEventListener('error', () => {
+      imgSobre.parentElement.classList.add('img-fallback');
+      imgSobre.alt = 'Foto da loja UAI AÇAÍ (imagem indisponível)';
+    });
+  }
+
   /* Ano no rodapé */
   const anoEl = document.getElementById('anoAtual');
   if (anoEl) anoEl.textContent = new Date().getFullYear();

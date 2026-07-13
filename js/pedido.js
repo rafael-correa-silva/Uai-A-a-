@@ -3,13 +3,18 @@
 
   /*
      CATÁLOGO E PREÇOS (mesmos valores reais do cardápio)
+     Única fonte de verdade: os cards da Seção "Cardápio" (mais abaixo,
+     CARDAPIO + gerarCardsCardapio) são montados a partir destes preços,
+     em vez de ter os valores repetidos também no HTML.
   */
   const PRECOS_ACAI = { '300ml': 12, '500ml': 18, '700ml': 24 };
 
+  // adicionaisInclusos = quantos adicionais (os mais caros escolhidos) saem
+  // de graça nessa barca — ver separarAdicionaisBarca() mais abaixo.
   const BARCAS = {
-    'Casal':   { label: 'Barca Casal — 700ml (5 adicionais inclusos)',      preco: 35 },
-    'Família': { label: 'Barca Família — 1 litro (7 adicionais inclusos)',  preco: 48 },
-    'Suprema': { label: 'Barca Suprema — 1,5 litro (10 adicionais inclusos)', preco: 65 }
+    'Casal':   { label: 'Barca Casal — 700ml (5 adicionais inclusos)',      preco: 35, adicionaisInclusos: 5 },
+    'Família': { label: 'Barca Família — 1 litro (7 adicionais inclusos)',  preco: 48, adicionaisInclusos: 7 },
+    'Suprema': { label: 'Barca Suprema — 1,5 litro (10 adicionais inclusos)', preco: 65, adicionaisInclusos: 10 }
   };
 
   const PRECO_MILKSHAKE = 15;
@@ -76,13 +81,8 @@
   }
 
   /*
-     ESTADO
-  */
-  let carrinho = [];
-  let editandoId = null;
-
-  /*
-     HELPERS
+     HELPERS DE FORMATAÇÃO (definidos cedo porque o gerador do cardápio,
+     logo abaixo, já precisa deles)
   */
   function formatarPreco(valor) {
     return 'R$ ' + valor.toFixed(2).replace('.', ',');
@@ -95,6 +95,252 @@
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
   }
+
+  // "R$ 12,00 – R$ 24,00": a faixa de preço do açaí, calculada a partir de
+  // PRECOS_ACAI (nunca hardcoded no HTML — muda o preço aqui e o card
+  // acompanha sozinho).
+  function faixaPrecoAcai() {
+    const valores = Object.values(PRECOS_ACAI);
+    return `${formatarPreco(Math.min(...valores))} – ${formatarPreco(Math.max(...valores))}`;
+  }
+
+  const TAMANHOS_ACAI_ORDENADOS = Object.keys(PRECOS_ACAI); // ['300ml','500ml','700ml']
+
+  /*
+     DADOS DO CARDÁPIO (Seção "Cardápio" — a antiga galeria de sabores)
+     Cada card é gerado a partir daqui em vez de ficar hardcoded no HTML,
+     então preço/tamanho nunca ficam duplicados em dois lugares.
+  */
+  const CARDAPIO = [
+    { tipo: 'acai', sabor: "M&M's e Calda de Morango", titulo: "M&ms & Calda de Morango",
+      imagemBase: 'copo-300ml-classico', imgW: 500, imgH: 500,
+      altImagem: 'Copo de açaí sabor Clássico', altFallback: 'Açaí Clássico (imagem indisponível)',
+      chips: ['Calda de Morango', "M&Ms"] },
+
+    { tipo: 'acai', sabor: 'Nutella, Morango e Leite em pó', titulo: 'Nutella & Morango & Leite em pó',
+      imagemBase: 'copo-500ml-nutella-morango', imgW: 500, imgH: 500,
+      altImagem: 'Copo de açaí sabor Nutella e Morango', altFallback: 'Nutella e Morango (imagem indisponível)',
+      chips: ['Nutella', 'Morango', 'Leite em pó'] },
+
+    { tipo: 'acai', sabor: 'Uva, Nutella e Leite em pó', titulo: 'Uva & Nutella & Leite em pó',
+      imagemBase: 'copo-500ml-uva', imgW: 500, imgH: 500,
+      altImagem: 'Copo de açaí sabor Uva', altFallback: 'Uva (imagem indisponível)',
+      chips: ['Uva', 'Nutella', 'Leite em pó'] },
+
+    { tipo: 'acai', sabor: 'Paçoca e Leite em pó', titulo: 'Paçoca & Leite em pó',
+      imagemBase: 'copo-500ml-pacoca', imgW: 500, imgH: 500,
+      altImagem: 'Copo de açaí sabor Paçoca', altFallback: 'Paçoca (imagem indisponível)',
+      chips: ['Paçoca', 'Leite em pó'] },
+
+    { tipo: 'acai', sabor: 'Ovo Maltine e Nutella', titulo: 'Ovo Maltine & Nutella',
+      imagemBase: 'copo-500ml-kiwi-morango', imgW: 500, imgH: 500,
+      altImagem: 'Copo de açaí sabor Kiwi e Morango', altFallback: 'Kiwi e Morango (imagem indisponível)',
+      chips: ['Nutella', 'Ovo Maltine'] },
+
+    { tipo: 'acai', sabor: 'Banana, Leite em pó e Leite condensado', titulo: 'Banana & Leite em pó & Leite condensado',
+      imagemBase: 'copo-700ml-banana', imgW: 500, imgH: 500,
+      altImagem: 'Copo de açaí sabor Banana', altFallback: 'Banana (imagem indisponível)',
+      chips: ['Banana', 'Leite condensado', 'Leite em pó'] },
+
+    { tipo: 'acai', sabor: "M&M's e Creme de Valsa", titulo: "M&M's & Creme de Valsa",
+      imagemBase: 'copo-700ml-mms-morango', imgW: 500, imgH: 500,
+      altImagem: "Copo de açaí sabor M&M's e Morango", altFallback: 'M&Ms e Morango (imagem indisponível)',
+      chips: ["M&M's", 'Creme de Valsa'] },
+
+    { tipo: 'acai', sabor: 'Kiwi, Morango e Leite Condensado', titulo: 'Kiwi & Morango & Leite Condensado',
+      imagemBase: 'copo-700ml-sonho-valsa', imgW: 500, imgH: 500,
+      altImagem: 'Copo de açaí sabor Sonho de Valsa', altFallback: 'Sonho de Valsa (imagem indisponível)',
+      chips: ['Kiwi', 'Morango', 'Leite Condensado'] },
+
+    { tipo: 'acai', sabor: 'Maracujá, Granola e Amendoim', titulo: 'Maracujá & Granola & Amendoim',
+      imagemBase: 'copo-morango-granola-amendoim', imgW: 500, imgH: 500,
+      altImagem: 'Copo de açaí sabor Morango, Granola e Amendoim', altFallback: 'Morango, Granola e Amendoim (imagem indisponível)',
+      chips: ['Maracujá', 'Granola', 'Amendoim'] },
+
+    { tipo: 'acai', sabor: 'Morango com Calda, Castanha e Granola', titulo: 'Morango & Castanha & Granola',
+      imagemBase: 'copo-maracuja-castanha', imgW: 500, imgH: 500,
+      altImagem: 'Copo de açaí sabor Maracujá e Castanha', altFallback: 'Maracujá e Castanha (imagem indisponível)',
+      chips: ['Morango com calda', 'Castanha', 'Granola'] },
+
+    { tipo: 'barca', sabor: 'Barca Casal', titulo: 'Barca Casal', barcaKey: 'Casal',
+      imagemBase: 'barca-especial', imgW: 900, imgH: 600,
+      altImagem: 'Barca especial de açaí Casal com diversos adicionais', altFallback: 'Barca Casal (imagem indisponível)',
+      chips: ['5 adicionais inclusos', 'Serve até 2 pessoas'], tamanhoLabel: '700ml' },
+
+    { tipo: 'barca', sabor: 'Barca Família', titulo: 'Barca Família', barcaKey: 'Família',
+      imagemBase: 'barca-especial', imgW: 900, imgH: 600,
+      altImagem: 'Barca especial de açaí Família com diversos adicionais', altFallback: 'Barca Família (imagem indisponível)',
+      chips: ['7 adicionais inclusos', 'Serve 3 a 4 pessoas'], tamanhoLabel: '1 litro' },
+
+    { tipo: 'barca', sabor: 'Barca Suprema', titulo: 'Barca Suprema', barcaKey: 'Suprema',
+      imagemBase: 'barca-especial', imgW: 900, imgH: 600,
+      altImagem: 'Barca especial de açaí Suprema com diversos adicionais', altFallback: 'Barca Suprema (imagem indisponível)',
+      chips: ['10 adicionais inclusos', 'Serve 5 a 6 pessoas'], tamanhoLabel: '1,5 litro' },
+
+    { tipo: 'milkshake', sabor: 'Milk-Shake Tradicional', titulo: 'Milk-Shake Tradicional',
+      imagemBase: 'milkshake-acai', imgW: 500, imgH: 500,
+      altImagem: 'Milk-shake de açaí sabor Tradicional', altFallback: 'Milk-Shake Tradicional (imagem indisponível)',
+      chips: ['Batido na hora'], tamanhoLabel: 'Tamanho único' },
+
+    { tipo: 'milkshake', sabor: 'Milk-Shake Morango', titulo: 'Milk-Shake Morango',
+      imagemBase: 'milkshake-acai', imgW: 500, imgH: 500,
+      altImagem: 'Milk-shake de açaí sabor Morango', altFallback: 'Milk-Shake Morango (imagem indisponível)',
+      chips: ['Batido na hora'], tamanhoLabel: 'Tamanho único' },
+
+    { tipo: 'milkshake', sabor: 'Milk-Shake Chocolate', titulo: 'Milk-Shake Chocolate',
+      imagemBase: 'milkshake-acai', imgW: 500, imgH: 500,
+      altImagem: 'Milk-shake de açaí sabor Chocolate', altFallback: 'Milk-Shake Chocolate (imagem indisponível)',
+      chips: ['Batido na hora'], tamanhoLabel: 'Tamanho único' },
+
+    { tipo: 'milkshake', sabor: 'Milk-Shake Creme de Avelã', titulo: 'Milk-Shake Creme de Avelã',
+      imagemBase: 'milkshake-acai', imgW: 500, imgH: 500,
+      altImagem: 'Milk-shake de açaí sabor Creme de Avelã', altFallback: 'Milk-Shake Creme de Avelã (imagem indisponível)',
+      chips: ['Batido na hora'], tamanhoLabel: 'Tamanho único' },
+
+    { tipo: 'milkshake', sabor: 'Milk-Shake Paçoca', titulo: 'Milk-Shake Paçoca',
+      imagemBase: 'milkshake-acai', imgW: 500, imgH: 500,
+      altImagem: 'Milk-shake de açaí sabor Paçoca', altFallback: 'Milk-Shake Paçoca (imagem indisponível)',
+      chips: ['Batido na hora'], tamanhoLabel: 'Tamanho único' },
+  ];
+
+  // Monta um card (<article class="galeria-card">) igual ao que antes vinha
+  // hardcoded no HTML, mas 100% via DOM (createElement/textContent — nunca
+  // innerHTML com texto livre) e já com <picture>/WebP + fallback JPG.
+  function criarCardCardapio(dados) {
+    const artigo = document.createElement('article');
+    artigo.className = 'galeria-card reveal';
+    artigo.dataset.sabor = dados.sabor;
+
+    const picture = document.createElement('picture');
+    const source = document.createElement('source');
+    source.type = 'image/webp';
+    source.srcset = `assets/img/${dados.imagemBase}.webp`;
+
+    const img = document.createElement('img');
+    img.className = 'galeria-card__img';
+    img.loading = 'lazy';
+    img.width = dados.imgW;
+    img.height = dados.imgH;
+    img.alt = dados.altImagem;
+    img.src = `assets/img/${dados.imagemBase}.jpg`;
+    // Fallback de imagem via JS (não inline), pra não depender de
+    // "unsafe-inline" na Content-Security-Policy.
+    img.addEventListener('error', () => {
+      artigo.classList.add('img-fallback');
+      img.alt = dados.altFallback;
+    });
+
+    picture.appendChild(source);
+    picture.appendChild(img);
+
+    const hint = document.createElement('span');
+    hint.className = 'galeria-card__hint';
+    hint.setAttribute('aria-hidden', 'true');
+    hint.textContent = '+';
+
+    const overlay = document.createElement('div');
+    overlay.className = 'galeria-card__overlay';
+
+    const adicionaisEl = document.createElement('div');
+    adicionaisEl.className = 'galeria-card__adicionais';
+    dados.chips.forEach(chip => {
+      const span = document.createElement('span');
+      span.textContent = chip;
+      adicionaisEl.appendChild(span);
+    });
+
+    const footer = document.createElement('div');
+    footer.className = 'galeria-card__footer';
+
+    const tamanhosEl = document.createElement('div');
+    tamanhosEl.className = 'galeria-card__tamanhos';
+    const rotulosTamanho = dados.tipo === 'acai' ? TAMANHOS_ACAI_ORDENADOS : [dados.tamanhoLabel];
+    rotulosTamanho.forEach(rotulo => {
+      const span = document.createElement('span');
+      span.textContent = rotulo;
+      tamanhosEl.appendChild(span);
+    });
+
+    const precoWrap = document.createElement('div');
+    precoWrap.className = 'galeria-card__preco-wrap';
+
+    const precoEl = document.createElement('span');
+    precoEl.className = 'galeria-card__preco';
+    if (dados.tipo === 'acai') {
+      precoEl.textContent = faixaPrecoAcai();
+    } else if (dados.tipo === 'barca') {
+      precoEl.textContent = formatarPreco(BARCAS[dados.barcaKey].preco);
+    } else {
+      precoEl.textContent = formatarPreco(PRECO_MILKSHAKE);
+    }
+
+    const botao = document.createElement('button');
+    botao.type = 'button';
+    botao.className = 'btn btn--sm btn--cta galeria-card__btn-pedir';
+    botao.dataset.produto = dados.sabor;
+    botao.textContent = 'Pedir';
+
+    precoWrap.appendChild(precoEl);
+    precoWrap.appendChild(botao);
+    footer.appendChild(tamanhosEl);
+    footer.appendChild(precoWrap);
+    overlay.appendChild(adicionaisEl);
+    overlay.appendChild(footer);
+
+    const titulo = document.createElement('h3');
+    titulo.className = 'galeria-card__titulo';
+    titulo.textContent = dados.titulo;
+
+    artigo.appendChild(picture);
+    artigo.appendChild(hint);
+    artigo.appendChild(overlay);
+    artigo.appendChild(titulo);
+    return artigo;
+  }
+
+  function gerarCardsCardapio() {
+    const grid = document.getElementById('listaGaleria');
+    if (!grid) return;
+    const fragmento = document.createDocumentFragment();
+    CARDAPIO.forEach(dados => fragmento.appendChild(criarCardCardapio(dados)));
+    grid.appendChild(fragmento);
+  }
+
+  // Executa imediatamente (fora do DOMContentLoaded): como esta tag <script>
+  // fica no fim do body, o grid #listaGaleria já existe no DOM nesse ponto.
+  // Isso garante que os cards já estejam prontos quando script.js (carregado
+  // antes) ligar os eventos de hover/toque/clique no DOMContentLoaded dele.
+  gerarCardsCardapio();
+
+  /*
+     FALLBACK PARA NAVEGADORES SEM SUPORTE A :has()
+     O destaque visual dos itens selecionados (adicional-check, opcao-tile)
+     usa CSS :has(input:checked). Em navegadores sem suporte (Safari <15.4,
+     Firefox <121) a seleção continua funcionando, só o destaque visual some.
+     Esta função replica o mesmo destaque via classe, então funciona em
+     qualquer navegador — é chamada sempre que uma caixinha é (des)marcada,
+     seja por clique do usuário ou programaticamente pelo próprio JS.
+  */
+  function sincronizarSelecionado(input) {
+    if (!input) return;
+    const opcao = input.closest('.adicional-check, .opcao-tile');
+    if (!opcao) return;
+    if (input.type === 'radio') {
+      // desmarca visualmente os outros do mesmo grupo (comportamento de radio)
+      document.querySelectorAll(`input[name="${input.name}"]`).forEach(irmao => {
+        const wrap = irmao.closest('.opcao-tile');
+        if (wrap) wrap.classList.toggle('is-selecionado', irmao.checked);
+      });
+    } else {
+      opcao.classList.toggle('is-selecionado', input.checked);
+    }
+  }
+
+  /*
+     ESTADO
+  */
+  let carrinho = [];
+  let editandoId = null;
 
   function gerarId() {
     return 'item-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
@@ -130,7 +376,10 @@
 
       if (dados.tipoEntrega === 'entrega') {
         const radioEntrega = document.getElementById('entrega-delivery');
-        if (radioEntrega) radioEntrega.checked = true;
+        if (radioEntrega) {
+          radioEntrega.checked = true;
+          sincronizarSelecionado(radioEntrega);
+        }
       }
       const enderecoEl = document.getElementById('campoEndereco');
       if (enderecoEl && dados.endereco) enderecoEl.value = dados.endereco;
@@ -163,7 +412,6 @@
   function interpretarProduto(nomeProduto) {
     const texto = (nomeProduto || '').trim();
     const minusculo = texto.toLowerCase();
-
 
     if (minusculo.startsWith('barca')) {
       let tamanho = 'Casal';
@@ -230,8 +478,11 @@
       container.appendChild(grupoEl);
     });
 
-    // Aviso de "mais de 5 adicionais"
-    container.addEventListener('change', atualizarAvisoAdicionais);
+    // Aviso de "mais de 5 adicionais" + destaque visual (fallback de :has())
+    container.addEventListener('change', (e) => {
+      atualizarAvisoAdicionais();
+      sincronizarSelecionado(e.target);
+    });
   }
 
   function atualizarAvisoAdicionais() {
@@ -275,8 +526,10 @@
 
     opcoes.forEach((op, indice) => {
       const tile = criarTileRadio('tamanho', op.valor, op.rotulo, op.preco);
-      if (indice === 0) tile.querySelector('input').checked = true;
+      const input = tile.querySelector('input');
+      if (indice === 0) input.checked = true;
       container.appendChild(tile);
+      sincronizarSelecionado(input);
     });
   }
 
@@ -286,9 +539,35 @@
     container.innerHTML = '';
     SABORES_MILKSHAKE.forEach((sabor, indice) => {
       const tile = criarTileRadio('saborMilkshake', sabor, sabor, PRECO_MILKSHAKE);
-      if (indice === 0) tile.querySelector('input').checked = true;
+      const input = tile.querySelector('input');
+      if (indice === 0) input.checked = true;
       container.appendChild(tile);
+      sincronizarSelecionado(input);
     });
+  }
+
+  // Mensagem explicando o desconto dos adicionais inclusos na barca — só
+  // aparece quando tipo=barca, e muda de acordo com o tamanho escolhido
+  // (Casal/Família/Suprema têm quantidades diferentes de inclusos).
+  function atualizarAvisoBarcaInclusos() {
+    const aviso = document.getElementById('avisoBarcaInclusos');
+    if (!aviso) return;
+    const tipo = document.getElementById('campoTipo').value;
+
+    if (tipo !== 'barca') {
+      aviso.textContent = '';
+      aviso.classList.remove('is-visivel');
+      return;
+    }
+
+    const radioMarcado = document.querySelector('#listaTamanho input:checked');
+    const tamanho = radioMarcado ? radioMarcado.value : null;
+    const incluidos = tamanho && BARCAS[tamanho] ? BARCAS[tamanho].adicionaisInclusos : 0;
+
+    if (incluidos) {
+      aviso.textContent = `Nessa barca, os ${incluidos} adicionais mais caros que você escolher vêm de graça — o restante é cobrado normalmente.`;
+      aviso.classList.add('is-visivel');
+    }
   }
 
   function atualizarCamposPorTipo() {
@@ -305,6 +584,8 @@
       milkshakeWrap.hidden = true;
       montarOpcoesTamanho(tipo);
     }
+
+    atualizarAvisoBarcaInclusos();
   }
 
   /*
@@ -317,6 +598,18 @@
     return 0;
   }
 
+  // Separa quais adicionais escolhidos entram "de graça" (inclusos no preço
+  // da barca) e quais são cobrados à parte. Dá o desconto sempre nos mais
+  // caros primeiro — assim o cliente sai ganhando o máximo possível.
+  function separarAdicionaisBarca(tamanho, adicionais) {
+    const incluidos = (BARCAS[tamanho] && BARCAS[tamanho].adicionaisInclusos) || 0;
+    const ordenados = [...adicionais].sort((a, b) => b.preco - a.preco);
+    return {
+      gratuitos: ordenados.slice(0, incluidos),
+      pagos: ordenados.slice(incluidos)
+    };
+  }
+
   function labelTipoTamanho(item) {
     if (item.tipo === 'acai') return `Açaí ${item.tamanho}`;
     if (item.tipo === 'barca') return BARCAS[item.tamanho] ? BARCAS[item.tamanho].label : `Barca ${item.tamanho}`;
@@ -327,6 +620,13 @@
   function tituloItem(item) {
     const base = `${item.quantidade}x ${labelTipoTamanho(item)}`;
     return item.sabor ? `${base} — ${item.sabor}` : base;
+  }
+
+  // Texto de um adicional no resumo/mensagem, já indicando quando ele está
+  // incluso de graça (barca) em vez de cobrado.
+  function textoAdicional(item, adicional) {
+    const gratis = item.adicionaisGratuitos && item.adicionaisGratuitos.includes(adicional.nome);
+    return `${adicional.nome} (${gratis ? 'incluso' : formatarPreco(adicional.preco)})`;
   }
 
   /*
@@ -342,7 +642,10 @@
 
   function limparAdicionaisSelecionados() {
     document.querySelectorAll('#listaAdicionais input[type="checkbox"]:checked')
-      .forEach(chk => { chk.checked = false; });
+      .forEach(chk => {
+        chk.checked = false;
+        sincronizarSelecionado(chk);
+      });
     atualizarAvisoAdicionais();
   }
 
@@ -363,7 +666,20 @@
     const quantidade = Math.max(1, parseInt(document.getElementById('campoQuantidade').value, 10) || 1);
     const separado = document.getElementById('campoSeparado').checked;
     const adicionais = lerAdicionaisSelecionados();
-    const precoUnitario = precoBaseItem(tipo, tamanho) + adicionais.reduce((soma, a) => soma + a.preco, 0);
+
+    // Nas barcas, os N adicionais mais caros escolhidos vêm inclusos no
+    // preço — só o restante é cobrado à parte (ver separarAdicionaisBarca).
+    let precoAdicionais;
+    let adicionaisGratuitos = [];
+    if (tipo === 'barca') {
+      const { gratuitos, pagos } = separarAdicionaisBarca(tamanho, adicionais);
+      precoAdicionais = pagos.reduce((soma, a) => soma + a.preco, 0);
+      adicionaisGratuitos = gratuitos.map(a => a.nome);
+    } else {
+      precoAdicionais = adicionais.reduce((soma, a) => soma + a.preco, 0);
+    }
+
+    const precoUnitario = precoBaseItem(tipo, tamanho) + precoAdicionais;
 
     return {
       id: editandoId || gerarId(),
@@ -371,6 +687,7 @@
       tamanho,
       sabor,
       adicionais,
+      adicionaisGratuitos,
       separado,
       quantidade,
       subtotal: precoUnitario * quantidade
@@ -383,13 +700,14 @@
 
     if (item.tipo === 'milkshake') {
       const radio = document.querySelector(`#listaSaborMilkshake input[value="${CSS.escape(item.sabor)}"]`);
-      if (radio) radio.checked = true;
+      if (radio) { radio.checked = true; sincronizarSelecionado(radio); }
       document.getElementById('campoSaborOculto').value = '';
     } else {
       const radio = document.querySelector(`#listaTamanho input[value="${CSS.escape(item.tamanho)}"]`);
-      if (radio) radio.checked = true;
+      if (radio) { radio.checked = true; sincronizarSelecionado(radio); }
       document.getElementById('campoSaborOculto').value = item.sabor || '';
     }
+    atualizarAvisoBarcaInclusos();
 
     document.getElementById('campoQuantidade').value = item.quantidade;
     document.getElementById('campoSeparado').checked = item.separado;
@@ -397,7 +715,7 @@
     limparAdicionaisSelecionados();
     item.adicionais.forEach(a => {
       const chk = document.querySelector(`#listaAdicionais input[data-nome="${CSS.escape(a.nome)}"]`);
-      if (chk) chk.checked = true;
+      if (chk) { chk.checked = true; sincronizarSelecionado(chk); }
     });
     atualizarAvisoAdicionais();
   }
@@ -438,7 +756,7 @@
         el.dataset.id = item.id;
 
         const adicionaisTexto = item.adicionais.length
-          ? item.adicionais.map(a => `${a.nome} (${formatarPreco(a.preco)})`).join(', ')
+          ? item.adicionais.map(a => textoAdicional(item, a)).join(', ')
           : 'Sem adicionais';
 
         el.innerHTML = `
@@ -547,7 +865,7 @@
       if (item.adicionais.length) {
         linhas.push('Adicionais:');
         item.adicionais.forEach(a => {
-          linhas.push(`   • ${a.nome} — ${formatarPreco(a.preco)}`);
+          linhas.push(`   • ${textoAdicional(item, a)}`);
         });
       }
       if (item.separado) linhas.push('   Obs: adicionais separados');
@@ -604,7 +922,9 @@
     limparFormulario();
     document.getElementById('campoObservacoes').value = '';
     enderecoEl.value = '';
-    document.getElementById('entrega-retirada').checked = true;
+    const radioRetirada = document.getElementById('entrega-retirada');
+    radioRetirada.checked = true;
+    sincronizarSelecionado(radioRetirada);
     atualizarVisibilidadeEndereco();
     sairModoEdicao();
     anunciarStatus('Pedido enviado! Confira o WhatsApp para finalizar. 🍇');
@@ -621,13 +941,14 @@
 
     if (dados.tipo === 'milkshake') {
       const radio = document.querySelector(`#listaSaborMilkshake input[value="${CSS.escape(dados.sabor)}"]`);
-      if (radio) radio.checked = true;
+      if (radio) { radio.checked = true; sincronizarSelecionado(radio); }
       document.getElementById('campoSaborOculto').value = '';
     } else {
       const radio = document.querySelector(`#listaTamanho input[value="${CSS.escape(dados.tamanho)}"]`);
-      if (radio) radio.checked = true;
+      if (radio) { radio.checked = true; sincronizarSelecionado(radio); }
       document.getElementById('campoSaborOculto').value = dados.sabor || '';
     }
+    atualizarAvisoBarcaInclusos();
 
     // Marca automaticamente as caixinhas dos adicionais típicos daquele
     // sabor (mostrados no próprio card). Só faz sentido para açaí: nas
@@ -638,7 +959,7 @@
       const nomesParaMarcar = resolverAdicionaisDoCard(adicionaisDoCard);
       nomesParaMarcar.forEach(nome => {
         const chk = document.querySelector(`#listaAdicionais input[data-nome="${CSS.escape(nome)}"]`);
-        if (chk) chk.checked = true;
+        if (chk) { chk.checked = true; sincronizarSelecionado(chk); }
       });
       atualizarAvisoAdicionais();
     }
@@ -657,6 +978,11 @@
     renderizarCarrinho();
 
     document.getElementById('campoTipo').addEventListener('change', atualizarCamposPorTipo);
+    document.getElementById('listaTamanho').addEventListener('change', (e) => {
+      sincronizarSelecionado(e.target);
+      atualizarAvisoBarcaInclusos();
+    });
+    document.getElementById('listaSaborMilkshake').addEventListener('change', (e) => sincronizarSelecionado(e.target));
     document.getElementById('formPedido').addEventListener('submit', adicionarOuAtualizarItem);
     document.getElementById('btnCancelarEdicao').addEventListener('click', () => {
       sairModoEdicao();
@@ -667,7 +993,8 @@
     document.getElementById('campoObservacoes').addEventListener('input', salvarCarrinho);
 
     document.querySelectorAll('input[name="tipoEntrega"]').forEach(radio => {
-      radio.addEventListener('change', () => {
+      radio.addEventListener('change', (e) => {
+        sincronizarSelecionado(e.target);
         atualizarVisibilidadeEndereco();
         salvarCarrinho();
       });

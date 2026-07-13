@@ -8,6 +8,10 @@
   --roxo-claro: #7A3FA0;
   --verde: #2E8B57;
   --verde-escuro: #226b42;
+  /* --verde tem contraste 4.25:1 sobre branco — abaixo do mínimo AA (4.5:1)
+     pra texto pequeno. --verde-texto (~6.5:1) é usada nesses casos; --verde
+     continua valendo para fundos/CTAs, onde já funciona bem. */
+  --verde-texto: #226b42;
   --branco: #FFFFFF;
   --off-white: #F7F3FA;
   --texto: #2B2B2B;
@@ -61,7 +65,7 @@ p { margin: 0 0 1em; }
   font-weight: 700;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: var(--verde);
+  color: var(--verde-texto);
   font-size: .8rem;
   margin: 0 0 .4em;
 }
@@ -407,7 +411,8 @@ p { margin: 0 0 1em; }
   display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
 }
 .galeria-card__preco {
-  font-family: var(--font-display); font-weight: 700; font-size: .95rem; color: var(--gema-clara);
+  font-family: var(--font-display); font-weight: 700; font-size: .82rem; color: var(--gema-clara);
+  text-align: right; line-height: 1.25; max-width: 92px;
 }
 .galeria-card__btn-pedir { padding: .4em .9em; font-size: .7rem; }
 
@@ -486,10 +491,13 @@ p { margin: 0 0 1em; }
   background: var(--off-white); border: 1px solid #E4DAEE; border-radius: var(--radius-sm);
   padding: 8px 10px; font-size: .82rem; cursor: pointer; transition: border-color .2s ease, background .2s ease;
 }
-.adicional-check:has(input:checked) { border-color: var(--verde); background: rgba(46,139,87,.08); }
+/* .is-selecionado é aplicada via JS (sincronizarSelecionado em pedido.js) e
+   replica o mesmo destaque do :has() — garante que a seleção fique visível
+   também em navegadores sem suporte a :has() (Safari <15.4, Firefox <121). */
+.adicional-check:has(input:checked), .adicional-check.is-selecionado { border-color: var(--verde); background: rgba(46,139,87,.08); }
 .adicional-check input[type="checkbox"] { accent-color: var(--verde); width: 16px; height: 16px; flex-shrink: 0; }
 .adicional-check span:first-of-type { flex: 1; min-width: 0; }
-.adicional-check__preco { color: var(--verde); font-weight: 700; white-space: nowrap; font-size: .76rem; }
+.adicional-check__preco { color: var(--verde-texto); font-weight: 700; white-space: nowrap; font-size: .76rem; }
 
 /*Caixas de seleção (tamanho / sabor do milk-shake)*/
 .opcoes-tile { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
@@ -499,10 +507,10 @@ p { margin: 0 0 1em; }
   background: var(--off-white); border: 2px solid #E4DAEE; border-radius: var(--radius-sm);
   padding: 10px 12px; font-size: .85rem; cursor: pointer; transition: border-color .2s ease, background .2s ease;
 }
-.opcao-tile:has(input:checked) { border-color: var(--roxo-claro); background: rgba(122,63,160,.08); }
+.opcao-tile:has(input:checked), .opcao-tile.is-selecionado { border-color: var(--roxo-claro); background: rgba(122,63,160,.08); }
 .opcao-tile input[type="radio"] { accent-color: var(--roxo-claro); width: 17px; height: 17px; flex-shrink: 0; }
 .opcao-tile__nome { flex: 1; min-width: 0; font-weight: 600; color: var(--texto); }
-.opcao-tile__preco { color: var(--verde); font-weight: 700; white-space: nowrap; font-size: .78rem; }
+.opcao-tile__preco { color: var(--verde-texto); font-weight: 700; white-space: nowrap; font-size: .78rem; }
 .campo-ajuda { margin: 6px 0 0; font-size: .78rem; color: #857e8c; }
 
 .aviso-adicionais {
@@ -511,6 +519,13 @@ p { margin: 0 0 1em; }
   color: #6b551a; font-size: .84rem; font-weight: 600; display: none;
 }
 .aviso-adicionais.is-visivel { display: block; }
+
+.aviso-barca-inclusos {
+  margin: 10px 0 0; padding: 10px 14px; border-radius: var(--radius-sm);
+  background: rgba(122,63,160,.08); border: 1px solid var(--roxo-claro);
+  color: var(--roxo); font-size: .82rem; font-weight: 600; display: none;
+}
+.aviso-barca-inclusos.is-visivel { display: block; }
 
 .pedido-form__acoes { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
 
@@ -535,7 +550,7 @@ p { margin: 0 0 1em; }
   font-size: .68rem; font-weight: 700; padding: 3px 9px; border-radius: 999px; text-transform: uppercase;
 }
 .carrinho-item__footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-.carrinho-item__subtotal { font-family: var(--font-display); font-weight: 700; color: var(--verde); font-size: 1rem; }
+.carrinho-item__subtotal { font-family: var(--font-display); font-weight: 700; color: var(--verde-texto); font-size: 1rem; }
 .carrinho-item__acoes { display: flex; gap: 8px; }
 .carrinho-item__acoes button {
   background: none; border: none; font-size: .78rem; font-weight: 700; cursor: pointer;
@@ -553,7 +568,7 @@ p { margin: 0 0 1em; }
 .carrinho__total strong { font-family: var(--font-display); color: var(--roxo); font-size: 1.3rem; }
 
 .carrinho__status {
-  text-align: center; margin: 10px 0 0; font-size: .85rem; font-weight: 600; color: var(--verde); min-height: 1.2em;
+  text-align: center; margin: 10px 0 0; font-size: .85rem; font-weight: 600; color: var(--verde-texto); min-height: 1.2em;
 }
 
 @media (min-width: 480px) {
