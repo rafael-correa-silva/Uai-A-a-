@@ -16,12 +16,12 @@
   const SABORES_MILKSHAKE = ['Tradicional', 'Morango', 'Chocolate', 'Creme de Avelã', 'Paçoca'];
 
   const ADICIONAIS_CATALOGO = [
-    { categoria: 'Frutas',        preco: 2,   itens: ['Banana', 'Morango', 'Uva', 'Kiwi', 'Manga', 'Maracujá'] },
-    { categoria: 'Pós & Xaropes', preco: 2,   itens: ['Leite em pó', 'Leite condensado', 'Coco ralado'] },
-    { categoria: 'Crocantes',     preco: 2,   itens: ['Paçoca', 'Granola', 'Castanha triturada', 'Amendoim', 'Confetes', 'Gotas de chocolate', "M&M's", 'Ovo Maltine'] },
-    { categoria: 'Caldas',        preco: 2,   itens: ['Calda de chocolate', 'Calda de morango', 'Calda de caramelo'] },
-    { categoria: 'Cremes',        preco: 3,   itens: ['Creme de avelã (Nutella)', 'Creme de ninho', 'Creme de leite condensado (Láctea)', 'Creme de morango', 'Creme de maracujá', 'Creme de Valsa'] },
-    { categoria: 'Premium',       preco: 4.5, itens: ['Kinder Bueno', 'Ouro Branco', 'Sonho de Valsa', 'Chocito', 'Kit Kat', 'Creme de Bis', 'Creme de Pistache'] }
+    { categoria: 'Frutas',        preco: 2,   itens: ['Banana', 'Morango', 'Uva', 'Kiwi', 'Manga', 'Maracujá', 'Abacaxi', 'Melancia'] },
+    { categoria: 'Pós & Xaropes', preco: 2,   itens: ['Leite em pó', 'Leite condensado', 'Coco ralado', 'Mel'] },
+    { categoria: 'Crocantes',     preco: 2,   itens: ['Paçoca', 'Granola', 'Castanha triturada', 'Amendoim', 'Confetes', 'Gotas de chocolate', "M&M's", 'Ovo Maltine', 'Sucrilhos', 'Biscoito triturado', 'Jujuba', 'Disquete'] },
+    { categoria: 'Caldas',        preco: 2,   itens: ['Calda de chocolate', 'Calda de morango', 'Calda de caramelo', 'Calda de maracujá'] },
+    { categoria: 'Cremes',        preco: 3,   itens: ['Creme de avelã (Nutella)', 'Creme de ninho', 'Creme de leite condensado (Láctea)', 'Creme de morango', 'Creme de maracujá', 'Creme de Valsa', 'Creme de Oreo'] },
+    { categoria: 'Premium',       preco: 4.5, itens: ['Kinder Bueno', 'Ouro Branco', 'Sonho de Valsa', 'Chocito', 'Kit Kat', 'Creme de Bis', 'Creme de Pistache', 'Ferrero Rocher', 'Diamante Negro'] }
   ];
 
   // Apelidos: como o adicional aparece no card da galeria → nome exato no catálogo acima.
@@ -102,7 +102,7 @@
   const TAMANHOS_ACAI_ORDENADOS = Object.keys(PRECOS_ACAI); // ['300ml','500ml','700ml']
 
   /*
-     DADOS DO CARDÁPIO (Seção "Cardápio" — a antiga galeria de sabores)
+     DADOS DO CARDÁPIO (Seção "Cardápio")
      Cada card é gerado a partir daqui em vez de ficar hardcoded no HTML,
      então preço/tamanho nunca ficam duplicados em dois lugares.
   */
@@ -198,7 +198,7 @@
       chips: ['Batido na hora'], tamanhoLabel: 'Tamanho único' },
   ];
 
-  // Monta um card (<article class="galeria-card">) igual ao que antes vinha
+  // Monta um card (<article class="galeria-card">)
   // hardcoded no HTML, mas 100% via DOM (createElement/textContent — nunca
   // innerHTML com texto livre) e já com <picture>/WebP + fallback JPG.
   function criarCardCardapio(dados) {
@@ -464,7 +464,6 @@
         label.innerHTML = `
           <input type="checkbox" id="${id}" data-nome="${nomeItem}" data-preco="${grupo.preco}">
           <span>${nomeItem}</span>
-          <span class="adicional-check__preco">${formatarPreco(grupo.preco)}</span>
         `;
         itensEl.appendChild(label);
       });
