@@ -500,8 +500,10 @@
     label.setAttribute('for', id);
     label.innerHTML = `
       <input type="radio" id="${id}" name="${nomeGrupo}" value="${valor}">
-      <span class="opcao-tile__nome">${rotulo}</span>
-      <span class="opcao-tile__preco">${formatarPreco(preco)}</span>
+      <span class="opcao-tile__texto">
+        <span class="opcao-tile__preco">${formatarPreco(preco)}</span>
+        <span class="opcao-tile__nome">${rotulo}</span>
+      </span>
     `;
     return label;
   }
