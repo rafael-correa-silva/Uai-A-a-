@@ -223,6 +223,38 @@ p { margin: 0 0 1em; }
 .hero__info p { display: flex; align-items: center; gap: 6px; margin: 0 0 .3em; }
 .hero__info img { filter: brightness(0) invert(1); opacity: .85; }
 
+.hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1.6em; }
+.btn--outline-light { background: transparent; color: var(--roxo); border-color: rgba(75,30,107,.35); }
+.btn--outline-light:hover { background: rgba(75,30,107,.06); }
+
+.hero__stats { display: flex; flex-wrap: wrap; gap: 10px 26px; margin: 0; padding: 0; list-style: none; }
+.hero__stats li { display: flex; flex-direction: column; gap: 2px; }
+.hero__stats strong { font-family: var(--font-display); font-size: 1.15rem; color: var(--gema-clara); }
+.hero__stats span { font-size: .72rem; opacity: .85; }
+
+/* Desktop: o hero deixa de ser "foto de fundo + texto por cima" e vira duas
+   colunas — texto de um lado, foto em cartão arredondado do outro. Reaproveita
+   os mesmos elementos do mobile via order/grid-column, sem duplicar markup. */
+@media (min-width: 1024px) {
+  .hero {
+    display: grid; grid-template-columns: 1.05fr .95fr; align-items: center;
+    gap: 48px; min-height: 88vh; background: var(--off-white); padding-top: 84px;
+  }
+  .hero__scrim { display: none; }
+  .hero__content { order: 1; padding-bottom: 0; color: var(--texto); }
+  .hero__media { order: 2; position: relative; inset: auto;
+    height: 480px; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card);
+  }
+  .hero .eyebrow { color: var(--verde-texto); }
+  .hero__title { color: var(--roxo); text-shadow: none; }
+  .hero__slogan { color: var(--texto); }
+  .hero__status { background: var(--branco); border-color: #E4DAEE; color: var(--texto); backdrop-filter: none; box-shadow: 0 4px 14px rgba(75,30,107,.08); }
+  .hero__info { color: var(--texto); opacity: 1; }
+  .hero__info img { filter: invert(13%) sepia(54%) saturate(3207%) hue-rotate(265deg) brightness(87%) contrast(101%); opacity: 1; }
+  .hero__stats strong { color: var(--roxo); }
+  .hero__stats span { color: var(--texto); opacity: .75; }
+}
+
 /* River / gem divider — assinatura visual: rio amazônico + "pedras" mineiras */
 .river-divider {
   position: relative; height: 70px; margin-top: -2px; background: var(--off-white);
@@ -255,11 +287,18 @@ p { margin: 0 0 1em; }
 
 
 .faq { background: var(--off-white); padding: 70px 0; }
+.faq__grupo { margin-bottom: 30px; }
+.faq__grupo:last-child { margin-bottom: 0; }
+.faq__categoria {
+  font-family: var(--font-display); font-weight: 600; font-size: 1rem; color: var(--roxo);
+  margin: 0 0 12px; display: flex; align-items: center; gap: 8px;
+}
+.faq__categoria::before { content: ""; width: 8px; height: 8px; background: var(--gema); transform: rotate(45deg); flex-shrink: 0; }
 .accordion-item {
   background: var(--branco); border-radius: var(--radius-sm); margin-bottom: 12px;
   box-shadow: 0 4px 16px rgba(75,30,107,.07); overflow: hidden;
 }
-.accordion-item h3 { margin: 0; }
+.accordion-item h4 { margin: 0; }
 .accordion-trigger {
   width: 100%; text-align: left; background: none; border: none;
   padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
@@ -298,6 +337,18 @@ p { margin: 0 0 1em; }
 .footer__socials img { filter: brightness(0) invert(1); opacity: .85; transition: opacity .2s ease; }
 .footer__socials a:hover img { opacity: 1; }
 
+.footer__pagamentos {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px;
+  padding: 22px 20px; border-top: 1px solid rgba(255,255,255,.15);
+  font-size: .82rem;
+}
+.footer__pagamentos-label { color: var(--gema-clara); font-weight: 600; }
+.footer__pagamentos-lista { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+.footer__pagamentos-lista li {
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.22);
+  padding: 5px 12px; border-radius: 999px; font-size: .78rem; color: #EADFF2;
+}
+
 .footer__bottom {
   border-top: 1px solid rgba(255,255,255,.15); text-align: center;
   padding: 18px 0; font-size: .78rem; opacity: .75;
@@ -328,9 +379,6 @@ p { margin: 0 0 1em; }
 /*
    BREAKPOINTS GLOBAIS ADICIONAIS
 */
-@media (min-width: 1024px) {
-  .hero { min-height: 86vh; }
-}
 @media (min-width: 1280px) {
   .container { padding: 0 32px; }
 }
@@ -384,6 +432,21 @@ p { margin: 0 0 1em; }
   font-family: var(--font-display); font-weight: 700; font-size: 1rem; line-height: 1;
   box-shadow: 0 2px 8px rgba(0,0,0,.2);
   transition: opacity .2s ease, transform .2s ease;
+}
+
+.galeria-card__selo {
+  position: absolute; top: 10px; left: 10px; z-index: 2;
+  font-family: var(--font-display); font-weight: 700; font-size: .64rem;
+  text-transform: uppercase; letter-spacing: .03em;
+  padding: 4px 9px; border-radius: 999px; color: var(--branco);
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  transition: opacity .2s ease;
+}
+.galeria-card__selo--mais-pedido { background: var(--verde); }
+.galeria-card__selo--novidade { background: var(--roxo-claro); }
+.galeria-card.is-ativo .galeria-card__selo { opacity: 0; }
+@media (hover: hover) and (pointer: fine) {
+  .galeria-card:hover .galeria-card__selo { opacity: 0; }
 }
 
 .galeria-card__overlay {
@@ -449,6 +512,27 @@ p { margin: 0 0 1em; }
   text-align: center; max-width: 52ch; margin: 0 auto 2.4rem;
   color: #5c5560; font-size: .95rem;
 }
+
+.pedido-steps {
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 8px;
+  margin: 0 0 26px; padding: 0; list-style: none;
+}
+.pedido-steps__item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: .82rem; font-weight: 600; color: #A99BB5;
+  padding: 6px 14px 6px 6px; border-radius: 999px;
+  background: var(--branco); border: 1.5px solid #E4DAEE;
+  transition: color .2s ease, border-color .2s ease, background .2s ease;
+}
+.pedido-steps__numero {
+  width: 22px; height: 22px; border-radius: 50%; background: #E4DAEE; color: var(--branco);
+  display: flex; align-items: center; justify-content: center; font-size: .75rem; flex-shrink: 0;
+  transition: background .2s ease;
+}
+.pedido-steps__item.is-ativo { color: var(--roxo); border-color: var(--roxo-claro); background: rgba(122,63,160,.06); }
+.pedido-steps__item.is-ativo .pedido-steps__numero { background: var(--roxo-claro); }
+.pedido-steps__item.is-concluido { color: var(--verde-texto); }
+.pedido-steps__item.is-concluido .pedido-steps__numero { background: var(--verde); }
 
 /*Campos genéricos do formulário*/
 .campo { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }

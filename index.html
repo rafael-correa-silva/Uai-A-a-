@@ -105,13 +105,6 @@
 
 <!-- 1. HERO -->
 <section class="hero">
-  <div class="hero__media">
-    <picture>
-      <source type="image/jpg" srcset="assets/img/hero-acai.jpg">
-      <img src="assets/img/hero-acai.jpg" alt="Copo de açaí montado com frutas frescas e coberturas da UAI AÇAÍ"
-           class="hero__img" width="1200" height="1200" fetchpriority="high" id="imgHero">
-    </picture>
-  </div>
   <div class="hero__scrim"></div>
 
   <div class="hero__content container">
@@ -129,10 +122,27 @@
       <p>Seg–Sex: 13h às 22h · Sáb–Dom: 12h às 23h</p>
     </div>
 
-    <a href="https://wa.me/5534998111439" class="btn btn--cta" target="_blank" rel="noopener">
-      <img src="assets/icons/whatsapp.svg" alt="" width="20" height="20">
-      Peça pelo WhatsApp!
-    </a>
+    <div class="hero__ctas">
+      <a href="https://wa.me/5534998111439" class="btn btn--cta" target="_blank" rel="noopener">
+        <img src="assets/icons/whatsapp.svg" alt="" width="20" height="20">
+        Peça pelo WhatsApp!
+      </a>
+      <a href="#cardapio" class="btn btn--outline-light">Ver cardápio</a>
+    </div>
+
+    <ul class="hero__stats">
+      <li><strong>8+</strong><span>sabores no cardápio</span></li>
+      <li><strong>4.9 ★</strong><span>avaliação média</span></li>
+      <li><strong>~30min</strong><span>entrega estimada</span></li>
+    </ul>
+  </div>
+
+  <div class="hero__media">
+    <picture>
+      <source type="image/jpg" srcset="assets/img/hero-acai.jpg">
+      <img src="assets/img/hero-acai.jpg" alt="Copo de açaí montado com frutas frescas e coberturas da UAI AÇAÍ"
+           class="hero__img" width="1200" height="1200" fetchpriority="high" id="imgHero">
+    </picture>
   </div>
 </section>
 
@@ -186,6 +196,12 @@
     <p class="eyebrow eyebrow--center">Faça seu pedido</p>
     <h2 class="section-title section-title--center">Monte seu açaí e envie pelo WhatsApp</h2>
     <p class="pedido__intro">Escolha o tipo, o tamanho e os adicionais, adicione quantos itens quiser ao pedido e confirme quando estiver tudo certo.</p>
+
+    <ol class="pedido-steps" aria-hidden="true">
+      <li class="pedido-steps__item is-ativo" data-step="tipo"><span class="pedido-steps__numero">1</span>Tipo</li>
+      <li class="pedido-steps__item" data-step="tamanho"><span class="pedido-steps__numero">2</span>Tamanho</li>
+      <li class="pedido-steps__item" data-step="adicionais"><span class="pedido-steps__numero">3</span>Adicionais</li>
+    </ol>
 
     <form id="formPedido" class="pedido-form" novalidate>
       <div class="pedido-form__grid">
@@ -297,124 +313,137 @@
     <p class="eyebrow eyebrow--center">Dúvidas</p>
     <h2 class="section-title section-title--center">Perguntas frequentes</h2>
 
-    <div class="accordion">
-      <div class="accordion-item">
-        <h3>
-          <button class="accordion-trigger" aria-expanded="false">
-            Qual a taxa de entrega?
-            <span class="accordion-icon" aria-hidden="true"></span>
-          </button>
-        </h3>
-        <div class="accordion-panel">
-          <p>A taxa de entrega varia de acordo com o bairro e a distância até o local da entrega. Consulte pelo WhatsApp.</p>
+    <div class="faq__grupo">
+      <h3 class="faq__categoria">Pedidos e pagamento</h3>
+      <div class="accordion">
+        <div class="accordion-item">
+          <h4>
+            <button class="accordion-trigger" aria-expanded="false">
+              Como faço meu pedido?
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+          </h4>
+          <div class="accordion-panel">
+            <p>Basta usar a seção "Faça seu Pedido" do site: escolha um item do cardápio ou monte o seu, confirme e envie direto pelo WhatsApp.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h4>
+            <button class="accordion-trigger" aria-expanded="false">
+              Quais formas de pagamento vocês aceitam?
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+          </h4>
+          <div class="accordion-panel">
+            <p>Aceitamos Pix, dinheiro, cartão de débito e cartão de crédito.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h4>
+            <button class="accordion-trigger" aria-expanded="false">
+              Qual a taxa de entrega?
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+          </h4>
+          <div class="accordion-panel">
+            <p>A taxa de entrega varia de acordo com o bairro e a distância até o local da entrega. Consulte pelo WhatsApp.</p>
+          </div>
         </div>
       </div>
+    </div>
 
-      <div class="accordion-item">
-        <h3>
-          <button class="accordion-trigger" aria-expanded="false">
-            Quais formas de pagamento vocês aceitam?
-            <span class="accordion-icon" aria-hidden="true"></span>
-          </button>
-        </h3>
-        <div class="accordion-panel">
-          <p>Aceitamos Pix, dinheiro, cartão de débito e cartão de crédito.</p>
+    <div class="faq__grupo">
+      <h3 class="faq__categoria">Entrega e retirada</h3>
+      <div class="accordion">
+        <div class="accordion-item">
+          <h4>
+            <button class="accordion-trigger" aria-expanded="false">
+              Posso retirar no local?
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+          </h4>
+          <div class="accordion-panel">
+            <p>Sim. Você pode fazer seu pedido pelo WhatsApp e retirar diretamente na loja.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h4>
+            <button class="accordion-trigger" aria-expanded="false">
+              Vocês fazem entrega?
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+          </h4>
+          <div class="accordion-panel">
+            <p>Sim. Realizamos entregas em diversos bairros da cidade durante todo o horário de funcionamento.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h4>
+            <button class="accordion-trigger" aria-expanded="false">
+              Qual o horário de funcionamento?
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+          </h4>
+          <div class="accordion-panel">
+            <p>Segunda a sexta: 13h às 22h. Sábado e domingo: 12h às 23h.</p>
+          </div>
         </div>
       </div>
+    </div>
 
-      <div class="accordion-item">
-        <h3>
-          <button class="accordion-trigger" aria-expanded="false">
-            Quais são os adicionais disponíveis?
-            <span class="accordion-icon" aria-hidden="true"></span>
-          </button>
-        </h3>
-        <div class="accordion-panel">
-          <p>Trabalhamos com diversas opções de frutas, cremes, crocantes e caldas. Consulte nosso cardápio para ver todas as opções disponíveis.</p>
+    <div class="faq__grupo">
+      <h3 class="faq__categoria">Cardápio e personalização</h3>
+      <div class="accordion">
+        <div class="accordion-item">
+          <h4>
+            <button class="accordion-trigger" aria-expanded="false">
+              Quais são os adicionais disponíveis?
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+          </h4>
+          <div class="accordion-panel">
+            <p>Trabalhamos com diversas opções de frutas, cremes, crocantes e caldas. Consulte nosso cardápio para ver todas as opções disponíveis.</p>
+          </div>
         </div>
-      </div>
 
-      <div class="accordion-item">
-        <h3>
-          <button class="accordion-trigger" aria-expanded="false">
-            Tem opção sem açúcar?
-            <span class="accordion-icon" aria-hidden="true"></span>
-          </button>
-        </h3>
-        <div class="accordion-panel">
-          <p>Sim. Temos opção de açaí sem adição de açúcar. Consulte a disponibilidade no momento do pedido.</p>
+        <div class="accordion-item">
+          <h4>
+            <button class="accordion-trigger" aria-expanded="false">
+              Posso montar meu próprio açaí?
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+          </h4>
+          <div class="accordion-panel">
+            <p>Sim. Você pode escolher o tamanho e personalizar seu pedido com os adicionais disponíveis.</p>
+          </div>
         </div>
-      </div>
 
-      <div class="accordion-item">
-        <h3>
-          <button class="accordion-trigger" aria-expanded="false">
-            As barcas servem quantas pessoas?
-            <span class="accordion-icon" aria-hidden="true"></span>
-          </button>
-        </h3>
-        <div class="accordion-panel">
-          <p>Barca Casal: até 2 pessoas. Barca Família: de 3 a 4 pessoas. Barca Suprema: de 5 a 6 pessoas.</p>
+        <div class="accordion-item">
+          <h4>
+            <button class="accordion-trigger" aria-expanded="false">
+              Tem opção sem açúcar?
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+          </h4>
+          <div class="accordion-panel">
+            <p>Sim. Temos opção de açaí sem adição de açúcar. Consulte a disponibilidade no momento do pedido.</p>
+          </div>
         </div>
-      </div>
 
-      <div class="accordion-item">
-        <h3>
-          <button class="accordion-trigger" aria-expanded="false">
-            Qual o horário de funcionamento?
-            <span class="accordion-icon" aria-hidden="true"></span>
-          </button>
-        </h3>
-        <div class="accordion-panel">
-          <p>Segunda a sexta: 13h às 22h. Sábado e domingo: 12h às 23h.</p>
-        </div>
-      </div>
-
-      <div class="accordion-item">
-        <h3>
-          <button class="accordion-trigger" aria-expanded="false">
-            Posso retirar no local?
-            <span class="accordion-icon" aria-hidden="true"></span>
-          </button>
-        </h3>
-        <div class="accordion-panel">
-          <p>Sim. Você pode fazer seu pedido pelo WhatsApp e retirar diretamente na loja.</p>
-        </div>
-      </div>
-
-      <div class="accordion-item">
-        <h3>
-          <button class="accordion-trigger" aria-expanded="false">
-            Vocês fazem entrega?
-            <span class="accordion-icon" aria-hidden="true"></span>
-          </button>
-        </h3>
-        <div class="accordion-panel">
-          <p>Sim. Realizamos entregas em diversos bairros da cidade durante todo o horário de funcionamento.</p>
-        </div>
-      </div>
-
-      <div class="accordion-item">
-        <h3>
-          <button class="accordion-trigger" aria-expanded="false">
-            Posso montar meu próprio açaí?
-            <span class="accordion-icon" aria-hidden="true"></span>
-          </button>
-        </h3>
-        <div class="accordion-panel">
-          <p>Sim. Você pode escolher o tamanho e personalizar seu pedido com os adicionais disponíveis.</p>
-        </div>
-      </div>
-
-      <div class="accordion-item">
-        <h3>
-          <button class="accordion-trigger" aria-expanded="false">
-            Como faço meu pedido?
-            <span class="accordion-icon" aria-hidden="true"></span>
-          </button>
-        </h3>
-        <div class="accordion-panel">
-          <p>Basta usar a seção "Faça seu Pedido" do site: escolha um item do cardápio ou monte o seu, confirme e envie direto pelo WhatsApp.</p>
+        <div class="accordion-item">
+          <h4>
+            <button class="accordion-trigger" aria-expanded="false">
+              As barcas servem quantas pessoas?
+              <span class="accordion-icon" aria-hidden="true"></span>
+            </button>
+          </h4>
+          <div class="accordion-panel">
+            <p>Barca Casal: até 2 pessoas. Barca Família: de 3 a 4 pessoas. Barca Suprema: de 5 a 6 pessoas.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -460,6 +489,16 @@
         </a>
       </div>
     </div>
+  </div>
+
+  <div class="container footer__pagamentos">
+    <span class="footer__pagamentos-label">Formas de pagamento</span>
+    <ul class="footer__pagamentos-lista">
+      <li>Pix</li>
+      <li>Dinheiro</li>
+      <li>Cartão de débito</li>
+      <li>Cartão de crédito</li>
+    </ul>
   </div>
 
   <div class="footer__bottom">

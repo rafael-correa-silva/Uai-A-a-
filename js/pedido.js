@@ -115,7 +115,7 @@
     { tipo: 'acai', sabor: 'Nutella, Morango e Leite em pó', titulo: 'Nutella & Morango & Leite em pó',
       imagemBase: 'copo-500ml-nutella-morango', imgW: 500, imgH: 500,
       altImagem: 'Copo de açaí sabor Nutella e Morango', altFallback: 'Nutella e Morango (imagem indisponível)',
-      chips: ['Nutella', 'Morango', 'Leite em pó'] },
+      chips: ['Nutella', 'Morango', 'Leite em pó'], selo: 'mais-pedido' },
 
     { tipo: 'acai', sabor: 'Uva, Nutella e Leite em pó', titulo: 'Uva & Nutella & Leite em pó',
       imagemBase: 'copo-500ml-uva', imgW: 500, imgH: 500,
@@ -150,7 +150,7 @@
     { tipo: 'acai', sabor: 'Maracujá, Granola e Amendoim', titulo: 'Maracujá & Granola & Amendoim',
       imagemBase: 'copo-morango-granola-amendoim', imgW: 500, imgH: 500,
       altImagem: 'Copo de açaí sabor Morango, Granola e Amendoim', altFallback: 'Morango, Granola e Amendoim (imagem indisponível)',
-      chips: ['Maracujá', 'Granola', 'Amendoim'] },
+      chips: ['Maracujá', 'Granola', 'Amendoim'], selo: 'novidade' },
 
     { tipo: 'acai', sabor: 'Morango com Calda, Castanha e Granola', titulo: 'Morango & Castanha & Granola',
       imagemBase: 'copo-maracuja-castanha', imgW: 500, imgH: 500,
@@ -227,6 +227,13 @@
 
     picture.appendChild(source);
     picture.appendChild(img);
+
+    if (dados.selo) {
+      const selo = document.createElement('span');
+      selo.className = `galeria-card__selo galeria-card__selo--${dados.selo}`;
+      selo.textContent = dados.selo === 'mais-pedido' ? 'Mais pedido' : 'Novidade';
+      artigo.appendChild(selo);
+    }
 
     const hint = document.createElement('span');
     hint.className = 'galeria-card__hint';
@@ -961,6 +968,21 @@
     }
   };
 
+  /* Indicador visual de passos (1. Tipo -> 2. Tamanho -> 3. Adicionais).
+     Puramente decorativo (aria-hidden no HTML) — não substitui os labels
+     reais do formulário, só ajuda a visualizar o progresso. */
+  function atualizarPassoPedido(passoAtivo) {
+    const itens = document.querySelectorAll('.pedido-steps__item');
+    if (!itens.length) return;
+    const ordem = ['tipo', 'tamanho', 'adicionais'];
+    const indiceAtivo = ordem.indexOf(passoAtivo);
+    itens.forEach(item => {
+      const indiceItem = ordem.indexOf(item.dataset.step);
+      item.classList.toggle('is-concluido', indiceItem < indiceAtivo);
+      item.classList.toggle('is-ativo', indiceItem === indiceAtivo);
+    });
+  }
+
   /*
      INICIALIZAÇÃO
   */
@@ -972,18 +994,29 @@
     atualizarCamposPorTipo();
     carregarCarrinho();
     renderizarCarrinho();
+    atualizarPassoPedido('tipo');
 
-    document.getElementById('campoTipo').addEventListener('change', atualizarCamposPorTipo);
+    document.getElementById('campoTipo').addEventListener('change', () => {
+      atualizarCamposPorTipo();
+      atualizarPassoPedido('tamanho');
+    });
     document.getElementById('listaTamanho').addEventListener('change', (e) => {
       sincronizarSelecionado(e.target);
       atualizarAvisoBarcaInclusos();
+      atualizarPassoPedido('adicionais');
     });
-    document.getElementById('listaSaborMilkshake').addEventListener('change', (e) => sincronizarSelecionado(e.target));
+    document.getElementById('listaSaborMilkshake').addEventListener('change', (e) => {
+      sincronizarSelecionado(e.target);
+      atualizarPassoPedido('adicionais');
+    });
+    document.getElementById('listaAdicionais').addEventListener('change', () => atualizarPassoPedido('adicionais'));
+    document.getElementById('formPedido').addEventListener('submit', () => atualizarPassoPedido('tipo'));
     document.getElementById('formPedido').addEventListener('submit', adicionarOuAtualizarItem);
     document.getElementById('btnCancelarEdicao').addEventListener('click', () => {
       sairModoEdicao();
       limparFormulario();
       anunciarStatus('Edição cancelada.');
+      atualizarPassoPedido('tipo');
     });
     document.getElementById('btnConfirmarPedido').addEventListener('click', confirmarPedido);
     document.getElementById('campoObservacoes').addEventListener('input', salvarCarrinho);
