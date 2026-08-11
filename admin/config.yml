@@ -18,6 +18,6 @@ collections:
         fields:
           - { label: "Título principal (Hero)", name: "heroTitle", widget: "string" }
           - { label: "Subtítulo (Hero)", name: "heroSubtitle", widget: "text" }
-          - { label: "Número do WhatsApp (só números, com DDD)", name: "whatsappNumber", widget: "string" }
-          - { label: "Endereço", name: "endereco", widget: "string" }
-          - { label: "Horário de funcionamento", name: "horario", widget: "string" }
+          - { label: "Link do WhatsApp (formato: https://wa.me/55DDDNUMERO)", name: "whatsappNumber", widget: "string" }
+          - { label: "Endereço (aperte Enter para quebrar linha)", name: "endereco", widget: "text" }
+          - { label: "Horário de funcionamento (aperte Enter para quebrar linha)", name: "horario", widget: "text" }

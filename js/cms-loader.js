@@ -20,7 +20,9 @@ fetch('/content/site.json')
         const attr = el.getAttribute('data-cms-attr');
         el.setAttribute(attr, data[key]);
       } else {
-        el.textContent = data[key];
+        // Quebras de linha digitadas pelo cliente viram <br>, pra manter
+        // formatação tipo "rua numa linha, cidade na outra".
+        el.innerHTML = String(data[key]).replace(/\n/g, '<br>');
       }
     });
   })
