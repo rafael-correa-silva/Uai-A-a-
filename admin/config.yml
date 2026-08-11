@@ -1,0 +1,23 @@
+backend:
+  name: github
+  repo: rafael-correa-silva/Uai-Acai
+  branch: main
+  base_url: https://uai-acai.vercel.app
+  auth_endpoint: api/auth
+
+media_folder: "assets/img/uploads"
+public_folder: "/assets/img/uploads"
+
+collections:
+  - name: "site"
+    label: "Conteúdo do Site"
+    files:
+      - label: "Página Inicial"
+        name: "home"
+        file: "content/site.json"
+        fields:
+          - { label: "Título principal (Hero)", name: "heroTitle", widget: "string" }
+          - { label: "Subtítulo (Hero)", name: "heroSubtitle", widget: "text" }
+          - { label: "Número do WhatsApp (só números, com DDD)", name: "whatsappNumber", widget: "string" }
+          - { label: "Endereço", name: "endereco", widget: "string" }
+          - { label: "Horário de funcionamento", name: "horario", widget: "string" }
