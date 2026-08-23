@@ -1,4 +1,10 @@
 
+function escapeHTML(str) {
+  const div = document.createElement('div');
+  div.textContent = String(str ?? '');
+  return div.innerHTML;
+}
+
 fetch('/content/site.json')
   .then((r) => r.json())
   .then((data) => {
@@ -9,7 +15,7 @@ fetch('/content/site.json')
         const attr = el.getAttribute('data-cms-attr');
         el.setAttribute(attr, data[key]);
       } else {
-        el.innerHTML = String(data[key]).replace(/\n/g, '<br>');
+        el.innerHTML = escapeHTML(data[key]).replace(/\n/g, '<br>');
       }
     });
   })

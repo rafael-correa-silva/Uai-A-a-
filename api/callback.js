@@ -1,7 +1,31 @@
+function parseCookie(header, name) {
+  if (!header) return null;
+  const prefix = name + '=';
+  for (const part of header.split(';')) {
+    const trimmed = part.trim();
+    if (trimmed.startsWith(prefix)) {
+      return decodeURIComponent(trimmed.slice(prefix.length));
+    }
+  }
+  return null;
+}
+
+// Serializa uma string como literal JS seguro para colar dentro de uma tag
+// <script>: usa JSON.stringify (escapa aspas/backslashes) e neutraliza
+// qualquer "<"/">" para que não seja possível fechar a tag prematuramente.
+function toSafeScriptLiteral(str) {
+  return JSON.stringify(str).replace(/</g, '\\u003c').replace(/>/g, '\\u003e');
+}
+
 export default async function handler(req, res) {
-  const { code } = req.query;
+  const { code, state } = req.query;
   const clientId = process.env.OAUTH_CLIENT_ID;
   const clientSecret = process.env.OAUTH_CLIENT_SECRET;
+
+  // O cookie de state é de uso único: limpamos aqui, antes de decidir se a
+  // autenticação será aceita ou não.
+  const cookieState = parseCookie(req.headers.cookie, 'oauth_state');
+  res.setHeader('Set-Cookie', 'oauth_state=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0');
 
   if (!code) {
     res.status(400).send('Código de autorização ausente.');
@@ -9,6 +33,10 @@ export default async function handler(req, res) {
   }
   if (!clientId || !clientSecret) {
     res.status(500).send('OAUTH_CLIENT_ID / OAUTH_CLIENT_SECRET não configurados nas variáveis de ambiente da Vercel.');
+    return;
+  }
+  if (!state || !cookieState || state !== cookieState) {
+    res.status(400).send('Falha na verificação de segurança (state inválido ou expirado). Tente autenticar novamente pelo /admin.');
     return;
   }
 
@@ -35,6 +63,7 @@ export default async function handler(req, res) {
 
     const token = data.access_token;
     const payload = JSON.stringify({ token, provider: 'github' });
+    const mensagem = toSafeScriptLiteral(`authorization:github:success:${payload}`);
 
     // Handshake padrão esperado pelo Decap CMS: a janela de login envia
     // uma mensagem postMessage de volta pra janela que abriu o /admin.
@@ -46,7 +75,7 @@ export default async function handler(req, res) {
             (function() {
               function receiveMessage(e) {
                 window.opener.postMessage(
-                  'authorization:github:success:${payload}',
+                  ${mensagem},
                   e.origin
                 );
                 window.removeEventListener('message', receiveMessage, false);

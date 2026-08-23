@@ -91,6 +91,12 @@
       .replace(/(^-|-$)/g, '');
   }
 
+  function escapeHTML(str) {
+    const div = document.createElement('div');
+    div.textContent = String(str ?? '');
+    return div.innerHTML;
+  }
+
   // "R$ 12,00 – R$ 24,00": a faixa de preço do açaí, calculada a partir de
   // PRECOS_ACAI (nunca hardcoded no HTML — muda o preço aqui e o card
   // acompanha sozinho).
@@ -469,8 +475,8 @@
         label.setAttribute('for', id);
 
         label.innerHTML = `
-          <input type="checkbox" id="${id}" data-nome="${nomeItem}" data-preco="${grupo.preco}">
-          <span>${nomeItem}</span>
+          <input type="checkbox" id="${id}" data-nome="${escapeHTML(nomeItem)}" data-preco="${grupo.preco}">
+          <span>${escapeHTML(nomeItem)}</span>
         `;
         itensEl.appendChild(label);
       });
@@ -506,10 +512,10 @@
     label.className = 'opcao-tile';
     label.setAttribute('for', id);
     label.innerHTML = `
-      <input type="radio" id="${id}" name="${nomeGrupo}" value="${valor}">
+      <input type="radio" id="${id}" name="${nomeGrupo}" value="${escapeHTML(valor)}">
       <span class="opcao-tile__texto">
         <span class="opcao-tile__preco">${formatarPreco(preco)}</span>
-        <span class="opcao-tile__nome">${rotulo}</span>
+        <span class="opcao-tile__nome">${escapeHTML(rotulo)}</span>
       </span>
     `;
     return label;
@@ -763,8 +769,8 @@
           : 'Sem adicionais';
 
         el.innerHTML = `
-          <div class="carrinho-item__titulo">${tituloItem(item)}</div>
-          <div class="carrinho-item__adicionais">Adicionais: ${adicionaisTexto}</div>
+          <div class="carrinho-item__titulo">${escapeHTML(tituloItem(item))}</div>
+          <div class="carrinho-item__adicionais">Adicionais: ${escapeHTML(adicionaisTexto)}</div>
           ${item.separado ? '<span class="carrinho-item__badge">Adicionais separados</span>' : ''}
           <div class="carrinho-item__footer">
             <span class="carrinho-item__subtotal">${formatarPreco(item.subtotal)}</span>
